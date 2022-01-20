@@ -1,4 +1,6 @@
-{{ define "main" }} {{ range .Pages.ByPublishDate.Reverse }}
+{{ define "main" }} {{ if ne .Title .Site.Title}}
+<h1>#{{ .Title }}</h1>
+{{ end }} {{ range .Pages.ByPublishDate.Reverse }}
 <article>
   <a href="{{ .RelPermalink }}" class="title"><h2>{{ .Title }}</h2></a>
   {{ partial "article/info.html" . }} {{ .Summary}}<a href="{{ .RelPermalink }}"

@@ -5,7 +5,7 @@ tags: [javascript, node, webdev, tutorial]
 draft: false
 ---
 
-JavaScript `Number` type would have been called `double` or `float64` in a compiled language. Therefore, numbers have some limits<!--more-->:
+JavaScript `Number` type would have been called `double` or `float64` in a compiled language. Therefore, numbers have some limits<!--more-->
 
 ```js
 const maxInt = Number.MAX_SAFE_INTEGER // 9007199254740991

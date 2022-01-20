@@ -5,7 +5,7 @@ tags: [webdev, go, node, irony]
 draft: false
 ---
 
-They say Go is the language of the web. Of course, with Google backing it up it sounds very objective! But is it as good as they say? I can  think of cases where it wouldn't be a good fit<!--more-->:
+They say Go is the language of the web. Of course, with Google backing it up it sounds very objective! But is it as good as they say? I can  think of cases where it wouldn't be a good fit<!--more-->
 
 ## 1. You need your app to compile for at least an hour so you can get a break 
 
