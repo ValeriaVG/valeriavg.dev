@@ -1,11 +1,11 @@
 <section class="info">
-  {{ with .Params.tags }}
-  <ul class="tags">
-    {{ range . }} {{ $href := print (relURL "tags/") (urlize .) }}
-    <li><a class="tag" href="{{ $href }}">#{{ . }}</a></li>
+  <span class="tags">
+    {{ range $idx, $tag := .Params.tags}} {{ $href := print (relURL "tags/")
+    (urlize .) }} {{if gt $idx 0}}, {{end}}
+    <a class="tag" href="{{ $href }}">#{{ $tag }}</a>
     {{ end }}
-  </ul>
-  {{ end }}
+  </span>
+
   <span class="date">
     {{ $dateTime := .PublishDate.Format "2006-01-02" }} {{ $dateFormat :=
     .Site.Params.dateFormat | default "Jan 2, 2006" }}
