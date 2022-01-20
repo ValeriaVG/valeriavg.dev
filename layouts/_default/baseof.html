@@ -4,9 +4,12 @@
     <meta charset="utf-8" />
     <link rel="icon" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{ .Title }} | {{ .Site.Title}}</title>
-    <meta name="description" content="{{ .Description }}" />
-    {{ range .AlternativeOutputFormats -}} {{ printf `
+    <title>
+      {{ if .Page.Title }}{{ .Page.Title }} - {{ end }}{{ .Site.Title }}
+    </title>
+    {{ if .Summary}}
+    <meta name="description" content="{{ .Summary }}" />
+    {{end}} {{ range .AlternativeOutputFormats -}} {{ printf `
     <link rel="%s" type="%s" href="%s" title="%s" />
     ` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }} {{ end -}}
     <style>
@@ -128,9 +131,6 @@
       </a>
       <navbar>
         <ul>
-          <li>
-            <a href="/about">About</a>
-          </li>
           <li>
             <a
               href="https://github.com/ValeriaVG"
