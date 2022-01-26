@@ -133,13 +133,19 @@ if err != nil {
 ```
 The `$1 = 0` bit is there to avoid `id<0` when the cursor is empty.
 
-And then *scan* rows one-by-one (and don't forget to close rows):
+And then *scan* rows one-by-one (and don't forget to close rows & handle errors):
 ```go
 defer rows.Close()
 for rows.Next() {
 		post := Post{}
-		rows.Scan(&post.ID, &post.Title, &post.Content, &post.Image)
+		err := rows.Scan(&post.ID, &post.Title, &post.Content, &post.Image)
+		if err != nil {
+			return &list, err
+		}
 		list.Items = append(list.Items, &post)
+	}
+	if err = rows.Err(); err != nil {
+		return &list, err
 }
 ```
 
