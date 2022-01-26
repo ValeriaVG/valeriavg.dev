@@ -1,6 +1,6 @@
 ---
 title: "Building a Social Network"
-date: 2022-01-07T21:28:51Z
+date: 2022-01-26T12:03:29+01:00
 draft: false
 tags: [go, postgresql, tutorial, encore]
 ---
