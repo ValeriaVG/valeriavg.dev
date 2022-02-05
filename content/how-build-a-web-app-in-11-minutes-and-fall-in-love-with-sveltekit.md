@@ -4,9 +4,9 @@ date: 2021-09-18T13:21:35Z
 tags: [svelte, node, webdev, tutorial]
 draft: false
 ---
-
 It's been a long time since I got excited about a framework. I often advocate *for* reinventing the wheel, how come I'm writing an ode to a framework? Short answer: because [SvelteKit](https://kit.svelte.dev/) is very good, even though it's still in *beta*. The long answer is ahead.
 <!--more-->
+
 [Svelte](https://svelte.dev/) itself is like coming back to the future: you write your user interfaces with almost old-school HTML in a declarative manner with zero-to-none boilerplate. And then `.svelte` files are compiled to the plain old `.js`,`.css` and `.html`. Apps come out fast, lightweight and easy to maintain and extend.
 
 But SvelteKit takes it even further. Heard of *Create React App*? Not even close! SvelteKit is a full-stack framework capable of producing not only single-page applications and static websites, but a versatile full-blown HTTP server with any pages, API and handlers NodeJS can have.
@@ -171,6 +171,8 @@ Navigate to `http://localhost:3000/login` or `http://localhost:3000/signup` to e
 
 ## Creating API Route handlers
 
+> Update: adjusted Svelte Kit API to that of v1.0.0-next.259 
+
 To create a handler for `POST /signup` all we need to do is create a `signup.ts` (or `.js`, if you prefer) file in routes, exporting a `post` function. Simple, right?
 
 But first, we need a couple of handy dependencies: [uuid](https://www.npmjs.com/package/uuid) to generate unique user ID's and tokens and [bcrypt](https://www.npmjs.com/package/bcrypt) to hash passwords:
@@ -188,32 +190,31 @@ import type { RequestHandler } from '@sveltejs/kit';
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
 
-export const post: RequestHandler<
-	{},
-	Partial<{ email: string; password: string; ['repeat-password']: string }>
-> = async (req) => {
-	if (typeof req.body == 'string' || Array.isArray(req.body))
-		return { status: 400, body: { error: 'Incorrect input' } };
+export const post: RequestHandler = async (event) => {
+    const contentType = event.request.headers.get('content-type')
+    const req = contentType === 'application/json' ? await event.request.json() : contentType?.includes('form') ? await event.request.formData() : null
+    if (!req) return { status: 400, body: { error: 'Incorrect input' } };
+    // Handle FormData & JSON
+    const input = {
+        email: ('get' in req ? req.get('email') : req.email)?.toLowerCase().trim(),
+        password: 'get' in req ? req.get('password') : req.password,
+        'repeat-password':
+            'get' in req ? req.get('repeat-password') : req['repeat-password']
+    };
+    if (!input.password || !input.email)
+        return { status: 400, body: { error: 'Email & password are required' } };
 
-	// Handle FormData & JSON
-	const input = {
-		email: ('get' in req.body ? req.body.get('email') : req.body.email)?.toLowerCase().trim(),
-		password: 'get' in req.body ? req.body.get('password') : req.body.password,
-		'repeat-password':
-			'get' in req.body ? req.body.get('repeat-password') : req.body['repeat-password']
-	};
+    if (input.password !== input['repeat-password'])
+        return { status: 400, body: { error: 'Passwords do not match' } };
 
-	if (input.password !== input['repeat-password'])
-		return { status: 400, body: { error: 'Passwords do not match' } };
+    const user = { id: uuidv4(), email: input.email, pwhash: await bcrypt.hash(input.password, 10) };
 
-	const user = { id: uuidv4(), email: input.email, pwhash: await bcrypt.hash(input.password, 10) };
-
-	return {
-		status: 201,
-		body: {
-			user
-		}
-	};
+    return {
+        status: 201,
+        body: {
+            user
+        }
+    };
 };
 ```
 
@@ -223,67 +224,65 @@ If you submit the signup form now you'll see a page with JSON response like this
 {"user":{"id":"60d784c7-d369-4df7-b506-a274c962880e","email":"clark.kent@daily.planet","pwhash":"$2b$10$QiLRAFF5qqGxWuQjT3dIou/gZo2A0URImJ1YMSjOx2GYs0BxHt/TC"}}
 ```
 
-Writing handlers in SvelteKit is as simple as writing a function that returns an object with `status`, `body` and optional `headers` properties. Spoiler alert: *body* can be plain text or binary `Uint8Array`, not only JSON.
+Writing handlers in SvelteKit is as simple as writing a function that returns an object with `status`, `body` and optional `headers` properties.
 
 But we are not storing user information anywhere yet. To do so we need to add a global store and give our handler access to it.
 
 First things first, let's create a poor-mans in-memory database in `src/lib/db.ts`:
 ```ts
-import fs from 'fs';
+import fs from 'fs/promises';
 
 export type User = {
-	id: string;
-	email: string;
-	pwhash: string;
+    id: string;
+    email: string;
+    pwhash: string;
 };
 
 export type UserToken = {
-	id: string;
-	email: string;
+    id: string;
+    email: string;
 };
 
 export interface DB {
-	users: Map<string, User>;
-	tokens: Map<string, UserToken>;
-	__stop: () => void;
+    users: Map<string, User>;
+    tokens: Map<string, UserToken>;
+    __stop: () => void;
 }
 
 const DB_FILE = 'db.json';
 
 export const initDB = async () => {
-	let data: Record<string, Array<[string, any]>> = {};
-	try {
-		const str = fs.readFileSync(DB_FILE);
-		data = JSON.parse(str.toString());
-	} catch (err) {
-		console.error(`Failed to read ${DB_FILE}`, err);
-	}
-	const db: DB = {
-		users: new Map<string, User>(data.users),
-		tokens: new Map<string, UserToken>(data.tokens),
-		__stop: () => {}
-	};
+    let data: Record<string, Array<[string, any]>> = {};
+    try {
+        const str = await fs.readFile(DB_FILE);
+        data = JSON.parse(str.toString());
+    } catch (err) {
+        console.error(`Failed to read ${DB_FILE}`, err);
+    }
+    const db: DB = {
+        users: new Map<string, User>(data.users),
+        tokens: new Map<string, UserToken>(data.tokens),
+        __stop: () => { }
+    };
 
-	const interval = setInterval(() => {
-		try {
-			fs.writeFileSync(
-				DB_FILE,
-				JSON.stringify({ users: [...db.users.entries()], tokens: [...db.tokens.entries()] })
-			);
-		} catch (err) {
-			console.error(`Failed to write ${DB_FILE}`, err);
-		}
-	}, 1_000);
+    const interval = setInterval(async () => {
+        try {
+            await fs.writeFile(
+                DB_FILE,
+                JSON.stringify({ users: [...db.users.entries()], tokens: [...db.tokens.entries()] })
+            );
+        } catch (err) {
+            console.error(`Failed to write ${DB_FILE}`, err);
+        }
+    }, 1_000);
 
-	db.__stop = () => {
-		clearInterval(interval);
-	};
+    db.__stop = () => {
+        clearInterval(interval);
+    };
 
-	return db;
+    return db;
 };
 ```
-
-> Note: At the moment of writing there's a [bug](https://github.com/vitejs/vite/issues/4037) in SvelteKit's dependency package, preventing the use of `fs/promises`, therefore the function above uses sync versions of `fs` methods. 
 
 To give every route access to this "database" we can use `hooks`, which allow us to *hook* middleware(s) before or after any route handler. Expectedly a file `src/hooks.ts` will do the trick:
 
@@ -293,18 +292,18 @@ import type { Handle } from '@sveltejs/kit';
 
 // Create a promise, therefore start execution
 const setup = initDB().catch((err) => {
-	console.error(err);
-	// Exit the app if setup has failed
-	process.exit(-1);
+    console.error(err);
+    // Exit the app if setup has failed
+    process.exit(-1);
 });
 
-export const handle: Handle = async ({ request, resolve }) => {
-	// Ensure that the promise is resolved before the first request
-	// It'll stay resolved for the time being
-	const db = await setup;
-	request.locals.db = db;
-	const response = await resolve(request);
-	return response;
+export const handle: Handle = async ({ event, resolve }) => {
+    // Ensure that the promise is resolved before the first request
+    // It'll stay resolved for the time being
+    const db = await setup;
+    event.locals['db'] = db;
+    const response = await resolve(event);
+    return response;
 };
 ```
 
@@ -358,41 +357,38 @@ import type { RequestHandler } from '@sveltejs/kit';
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
 import type { DB } from '$lib/db';
+export const post: RequestHandler = async (event) => {
+    const contentType = event.request.headers.get('content-type')
+    const req = contentType === 'application/json' ? await event.request.json() : contentType?.includes('form') ? await event.request.formData() : null
+    if (!req) return { status: 400, body: { error: 'Incorrect input' } };
 
-export const post: RequestHandler<
-	{ db: DB },
-	Partial<{ email: string; password: string }>
-> = async (req) => {
-	if (typeof req.body == 'string' || Array.isArray(req.body))
-		return { status: 400, body: { error: 'Incorrect input' } };
+    // Handle FormData & JSON
+    const input = {
+        email: ('get' in req ? req.get('email') : req.email)?.toLowerCase().trim(),
+        password: 'get' in req ? req.get('password') : req.password
+    };
 
-	// Handle FormData & JSON
-	const input = {
-		email: ('get' in req.body ? req.body.get('email') : req.body.email)?.toLowerCase().trim(),
-		password: 'get' in req.body ? req.body.get('password') : req.body.password
-	};
+    const db = event.locals['db'] as DB;
+    const user = db.users.get(input.email);
 
-	const db = req.locals.db;
-	const user = db.users.get(input.email);
+    if (!user) return { status: 400, body: { error: 'Incorrect email or password' } };
 
-	if (!user) return { status: 400, body: { error: 'Incorrect email or password' } };
+    const isPasswordValid = await bcrypt.compare(input.password, user.pwhash);
 
-	const isPasswordValid = await bcrypt.compare(input.password, user.pwhash);
+    if (!isPasswordValid) return { status: 400, body: { error: 'Incorrect email or password' } };
 
-	if (!isPasswordValid) return { status: 400, body: { error: 'Incorrect email or password' } };
+    const token = { id: uuidv4(), email: user.email };
+    db.tokens.set(token.id, token);
 
-	const token = { id: uuidv4(), email: user.email };
-	db.tokens.set(token.id, token);
-
-	return {
-		status: 200,
-		body: {
-			user
-		},
-		headers: {
-			'set-cookie': `token=${token.id}`
-		}
-	};
+    return {
+        status: 200,
+        body: {
+            user
+        },
+        headers: {
+            'set-cookie': `token=${token.id}`
+        }
+    };
 };
 ```
 
@@ -407,7 +403,7 @@ Go ahead and try logging in with correct and then wrong credentials. It works an
 Both of our `login` and `signup` pages are pretty much the same and the functionality is quite similar. Therefore, let's write a component to use in both of them. Create `src/routes/_form.svelte`:
 
 ```html
-<script lang="typescript">
+<script lang="ts">
 	import type { User } from '$lib/db';
 	import { afterUpdate } from 'svelte';
 	export let action = '/';
@@ -469,7 +465,7 @@ Simply exporting values from a Svelte component makes them *properties*, similar
 
 And now let's import and use this component in `src/routes/login.svelte`:
 ```html
-<script lang="typescript">
+<script lang="ts">
 	import { goto } from '$app/navigation';
 	import { session } from '$app/stores';
 	import Form from './_form.svelte';
@@ -507,7 +503,7 @@ Here we are also setting *session* state so that other pages will have access to
 
 Let's add the `<Form/>` to `src/routes/signup.svelte` as well:
 ```html
-<script lang="typescript">
+<script lang="ts">
 	import { goto } from '$app/navigation';
 	import Form from './_form.svelte';
 	let isSubmitting: boolean;
@@ -552,7 +548,7 @@ Now you should be able to create an account and log in without annoying raw JSON
 The whole point of user authentication is to show something that only a certain user should see. That's why we are going to make some changes to the `src/routes/index.svelte` page:
 
 ```html
-<script lang="typescript">
+<script lang="ts">
 	import { session } from '$app/stores';
 	import type { User } from '$lib/db';
 	let user: User | undefined;
@@ -582,43 +578,43 @@ import { parse } from 'querystring';
 
 // Create a promise, therefore start execution
 const setup = initDB().catch((err) => {
-	console.error(err);
-	// Exit the app if setup has failed
-	process.exit(-1);
+    console.error(err);
+    // Exit the app if setup has failed
+    process.exit(-1);
 });
 
-export const handle: Handle = async ({ request, resolve }) => {
-	// Ensure that the promise is resolved before the first request
-	// It'll stay resolved for the time being
-	const db = await setup;
-	request.locals.db = db;
-	const cookies = request.headers.cookie
-		?.split(';')
-		.map((v) => parse(v.trim()))
-		.reduceRight((a, c) => {
-			return Object.assign(a, c);
-		});
-	if (cookies?.token && typeof cookies.token === 'string') {
-		const existingToken = db.tokens.get(cookies.token);
-		if (existingToken) {
-			request.locals.user = db.users.get(existingToken.email);
-		}
-	}
-	const response = await resolve(request);
-	return response;
+export const handle: Handle = async ({ event, resolve }) => {
+    // Ensure that the promise is resolved before the first request
+    // It'll stay resolved for the time being
+    const db = await setup;
+    event.locals['db'] = db;
+    const cookies = event.request.headers.get('cookie')
+        ?.split(';')
+        .map((v) => parse(v.trim()))
+        .reduceRight((a, c) => {
+            return Object.assign(a, c);
+        });
+    if (cookies?.token && typeof cookies.token === 'string') {
+        const existingToken = db.tokens.get(cookies.token);
+        if (existingToken) {
+            event.locals['user'] = db.users.get(existingToken.email);
+        }
+    }
+    const response = await resolve(event);
+    return response;
 };
 
-export const getSession: GetSession = (request) => {
-	return request.locals.user
-		? {
-				user: {
-					// only include properties needed client-side —
-					// exclude anything else attached to the user
-					// like access tokens etc
-					email: request.locals.user.email
-				}
-		  }
-		: {};
+export const getSession: GetSession = (event) => {
+    return event.locals['user']
+        ? {
+            user: {
+                // only include properties needed client-side —
+                // exclude anything else attached to the user
+                // like access tokens etc
+                email: event.locals['user'].email
+            }
+        }
+        : {};
 };
 ```
 
