@@ -3,6 +3,7 @@ title: "Me & React: 5 Years in 15 Minutes"
 date: 2022-09-08T06:56:49+02:00
 tags: [javascript, react, frontend]
 draft: false
+twitter: "1567745886800732160"
 ---
 
 I first heard of React when a friend showed me a project he had written. It was some sort of content management system: it had tables, forms, visual editors and stuff like this. I don't remember much, except that code was really really confusing, it looked like this:

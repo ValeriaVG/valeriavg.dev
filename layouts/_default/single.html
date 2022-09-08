@@ -3,13 +3,22 @@
 <h1 style="margin-bottom: 0.5rem">{{ .Title }}</h1>
 {{ partial "article/info.html" . }} {{ .Content }}
 <section class="links">
-  {{ if ne .Params.dev_to ""}}
+  {{ if (isset .Params "dev_to")}}
   <a
     href="{{.Params.dev_to}}#comments"
     target="_blank"
     rel="noopener noreferrer"
     class="dev-to-link"
     >Discuss on Dev</a
+  >
+  {{ end }} {{ if (isset .Params "twitter") }}
+  <a
+    href="https://twitter.com/intent/tweet?in_reply_to={{.Params.twitter}}"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="twitter-link"
+  >
+    Discuss on Twitter</a
   >
   {{ end }}
 
