@@ -3,6 +3,7 @@ title: "5 Ways to Use Redis in Your Next Project"
 date: 2020-11-17T10:43:15Z
 tags: [redis, node, database]
 draft: false
+dev_to: "https://dev.to/valeriavg/5-ways-to-use-redis-in-your-next-project-1j2o"
 ---
 
 If the best code is no code at all, then the next best thing is code, that you can explain in one simple sentence. 

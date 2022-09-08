@@ -2,14 +2,17 @@
 
 <h1 style="margin-bottom: 0.5rem">{{ .Title }}</h1>
 {{ partial "article/info.html" . }} {{ .Content }}
-<div
-  style="
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  "
->
+<section class="links">
+  {{ if ne .Params.dev_to ""}}
+  <a
+    href="{{.Params.dev_to}}#comments"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="dev-to-link"
+    >Discuss on Dev</a
+  >
+  {{ end }}
+
   <script
     type="text/javascript"
     src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
@@ -23,5 +26,5 @@
     data-font-color="#000000"
     data-coffee-color="#FFDD00"
   ></script>
-</div>
+</section>
 {{ end }}

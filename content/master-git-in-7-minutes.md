@@ -3,6 +3,7 @@ title: "Master Git in 7 Minutes"
 date: 2021-07-11T12:27:30Z
 tags: [beginners, git, tutorial, webdev]
 draft: false
+dev_to: "https://dev.to/valeriavg/master-git-in-7-minutes-gai"
 ---
 
 Essentially, Git keeps tabs on text changes, but the definition is a version control system. Chances are you've already used git one way or another: it is a de-facto standard for code versioning due to it's distributed nature, as opposed to centralised Apache Subversion (SVN).

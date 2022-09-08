@@ -3,6 +3,7 @@ title: "Master Binary in Five Minutes"
 date: 2021-06-13T08:37:41Z
 tags: [webdev, javascript, beginners, tutorial]
 draft: false
+dev_to: "https://dev.to/valeriavg/master-binary-in-five-minutes-2lj5"
 ---
 
 Binary is the very core of everything digital, not only in web development, but literally everything: from variables and file data to transport protocols and executables themselves.<!--more-->

@@ -3,6 +3,7 @@ title: "How Build a Web App in 11 Minutes and Fall in Love With Sveltekit"
 date: 2021-09-18T13:21:35Z
 tags: [svelte, node, webdev, tutorial]
 draft: false
+dev_to: "https://dev.to/valeriavg/how-build-a-web-app-in-11-minutes-and-fall-in-love-with-sveltekit-1hof"
 ---
 It's been a long time since I got excited about a framework. I often advocate *for* reinventing the wheel, how come I'm writing an ode to a framework? Short answer: because [SvelteKit](https://kit.svelte.dev/) is very good, even though it's still in *beta*. The long answer is ahead.
 <!--more-->

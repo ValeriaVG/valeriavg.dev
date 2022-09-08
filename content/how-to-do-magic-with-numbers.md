@@ -3,6 +3,7 @@ title: "How to Do Magic With Numbers"
 date: 2021-01-24T11:05:13Z
 tags: [javascript, node, webdev, tutorial]
 draft: false
+dev_to: "https://dev.to/valeriavg/how-to-do-magic-with-numbers-p6d"
 ---
 
 JavaScript `Number` type would have been called `double` or `float64` in a compiled language. Therefore, numbers have some limits<!--more-->

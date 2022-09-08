@@ -3,6 +3,7 @@ title: "10 Reasons NOT to Use Go for Your Next Project"
 date: 2021-12-06T15:58:52Z
 tags: [webdev, go, node, irony]
 draft: false
+dev_to: "https://dev.to/valeriavg/10-reasons-not-to-use-go-for-your-next-project-313i"
 ---
 
 They say Go is the language of the web. Of course, with Google backing it up it sounds very objective! But is it as good as they say? I can  think of cases where it wouldn't be a good fit<!--more-->
