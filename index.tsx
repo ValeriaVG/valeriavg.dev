@@ -22,6 +22,7 @@ import TagPage from "./pages/tag.tsx";
 const staticContent = await loadFS("./static");
 const rawContent = await loadFS("./content");
 const content: Record<string, Article> = {};
+const defaultRenderer = new Renderer();
 
 for (const pathname in rawContent) {
   if (!pathname.endsWith(".md")) {
@@ -43,7 +44,18 @@ for (const pathname in rawContent) {
           title ? ` title="${title}"` : ""
         } rel="noopener noreferrer">${text}</a>`;
       }
-      return `<a href="${href}"${title ? ` title="${title}"` : ""}>${text}</a>`;
+      return defaultRenderer.link(href, title, text);
+    };
+
+    options.renderer.image = (
+      href: string,
+      title: string,
+      text: string
+    ): string => {
+      if (href.startsWith(".")) {
+        href = article.url + href.slice(1);
+      }
+      return defaultRenderer.image(href, title, text);
     };
 
     article.content = Marked.parse(data.body, options).content;
