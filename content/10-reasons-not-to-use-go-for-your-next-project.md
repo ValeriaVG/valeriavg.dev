@@ -4,11 +4,13 @@ date: 2021-12-06T15:58:52Z
 tags: [webdev, go, node, irony]
 draft: false
 dev_to: "https://dev.to/valeriavg/10-reasons-not-to-use-go-for-your-next-project-313i"
+summary: |
+  They say Go is the language of the web. Of course, with Google backing it up it sounds very objective! But is it as good as they say? I can  think of cases where it wouldn't be a good fit
 ---
 
-They say Go is the language of the web. Of course, with Google backing it up it sounds very objective! But is it as good as they say? I can  think of cases where it wouldn't be a good fit<!--more-->
+They say Go is the language of the web. Of course, with Google backing it up it sounds very objective! But is it as good as they say? I can think of cases where it wouldn't be a good fit
 
-## 1. You need your app to compile for at least an hour so you can get a break 
+## 1. You need your app to compile for at least an hour so you can get a break
 
 Totally relatable. With Go compile speed you won't be able to even stand up from your chair, let alone grab a coffee! No, really, do they even compile it all?! I had TypeScript taking longer to check a small project than `go run`!
 
@@ -18,7 +20,7 @@ With Go, it's really hard to write frustrating code. No classes, no multiple inh
 
 ## 3. You hate default values
 
-In Go, every variable always has a value. An integer would be created with a `0`, a string would be an empty string and so on. Why would you leave JavaScript with its variety of `null`, `undefined` and empty values for such a limited language?! 
+In Go, every variable always has a value. An integer would be created with a `0`, a string would be an empty string and so on. Why would you leave JavaScript with its variety of `null`, `undefined` and empty values for such a limited language?!
 
 ## 4. You don't like to handle errors
 
@@ -38,7 +40,7 @@ I don't know how you guys put up with it. Go won't even launch on my dedicated W
 
 ## 8. Your hosting provider only supports PHP & MySQL
 
-Who do you call a dinosaur?! This technology has withstood the test of time and no new fancy tech can say that. Go was released just the other day, in 2009, while PHP dates back to 1995! 
+Who do you call a dinosaur?! This technology has withstood the test of time and no new fancy tech can say that. Go was released just the other day, in 2009, while PHP dates back to 1995!
 
 ## 9. Your application requires full control over memory
 
@@ -47,8 +49,6 @@ Jokes aside, everything comes at a price and Go is great for a lot of things, bu
 ## 10. You are writing embedded software or an OS
 
 Go will only compile to a supported platform. You can't write a custom operational system in Go or run it on bare metal. Once again, Rust could back you up here since Go is simply not made for it.
-
-
 
 I've run out of reasons not to write in Go. I love Rust, but Go is almost as fast yet much, much simpler to learn and write in. I love Node.js + TypeScript, but I love performance and runtime type-checks more.
 

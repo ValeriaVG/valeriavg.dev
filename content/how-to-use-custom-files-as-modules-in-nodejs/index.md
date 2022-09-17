@@ -3,19 +3,22 @@ title: "How to Use Custom Files as Modules in Nodejs"
 date: 2021-02-21T13:49:13Z
 tags: [javascript, node, webdev, tutorial]
 draft: false
+summary: |
+  There are quite a few cases where you can benefit from importing an arbitrary file directly: in universal apps, tests, or simply to avoid boilerplate. Good news: you don't need Babel, Webpack, or anything else for it.
 ---
 
 There are quite a few cases where you can benefit from importing an arbitrary file directly: in universal apps, tests, or simply to avoid boilerplate. Good news: you don't need Babel, Webpack, or anything else for it.
 
-For this tutorial, we'll make a server that will render a static HTML page with CSS styles, loaded as modules.  
-<!--more-->
+For this tutorial, we'll make a server that will render a static HTML page with CSS styles, loaded as modules.
 
 Create a CSS file:
 
 ```bash
 echo 'html{background:teal;color:white;}' >> styles.css
 ```
+
 An HTML template:
+
 ```bash
 echo '<!DOCTYPE html>
 <html lang="en">
@@ -32,6 +35,7 @@ echo '<!DOCTYPE html>
 ```
 
 And a server to render the result:
+
 ```js
 // index.js
 const http = require("http");
@@ -52,6 +56,7 @@ server.listen(0, () => {
 ```
 
 If you try running this file now you'll get an error:
+
 ```bash
 node index
 template.html:1
@@ -62,6 +67,7 @@ SyntaxError: Unexpected token '<'
 ```
 
 To fix it we are going to tell NodeJS how to handle these extensions. Prepare to be amazed because all the code we need is:
+
 ```js
 // hook.js
 const Module = require("module");
@@ -86,7 +92,7 @@ node -r ./hook index
 Follow the link and you should see the HTML page with proper styles:
 
 ![HTML page saying "Is background teal?" with white letters on a teal background](./is_bg_teal.png)
- 
+
 > Note: If you have any troubles running this example, try using NodeJS v14.5.0.
 
 By the way, you can add `require('./hook')` directly at the beginning of `index.js` instead of using `-r` or `--require` command-line argument.
@@ -96,6 +102,7 @@ By the way, you can add `require('./hook')` directly at the beginning of `index.
 Great question! ECMAScript modules support in NodeJS is still unstable, meaning that it might drastically change in the future, but as for February 2021 we can load custom modules with `node --experimental-loader <filename>`.
 
 My ECMAScript server module looks like this:
+
 ```js
 // index.mjs
 import http from "http";
@@ -117,6 +124,7 @@ server.listen(0, () => {
 ```
 
 And the [experimental loader](https://nodejs.org/api/esm.html#esm_loaders) is as follows:
+
 ```js
 // loader.mjs
 import { URL, pathToFileURL } from "url";
@@ -163,12 +171,12 @@ export function transformSource(source, context, defaultTransformSource) {
   // Let Node.js handle all other sources.
   return defaultTransformSource(source, context, defaultTransformSource);
 }
-
 ```
 
 Don't forget to use `.mjs` extension for ES modules or otherwise enable them (e.g. set `"type":"module"` in `package.json`).
 
 And run it with:
+
 ```bash
 node --experimental-loader ./loader.mjs index.mjs
 # (node:14706) ExperimentalWarning: --experimental-loader is an experimental feature. This feature could change at any time
@@ -198,10 +206,11 @@ echo '{
 '>>tsconfig.json
 
 ```
-I've set *esModuleInterop* to true to keep `hook.js` intact, otherwise, we'd need to change `module.exports=content` to `module.exports.default=content`.
 
+I've set _esModuleInterop_ to true to keep `hook.js` intact, otherwise, we'd need to change `module.exports=content` to `module.exports.default=content`.
 
 My typed version of the infamous server:
+
 ```ts
 // index.ts
 import { Server } from "http";
@@ -223,10 +232,10 @@ server.listen(0, () => {
     }`
   );
 });
-
 ```
 
 Once again, if we try running it now, it'll fail:
+
 ```bash
 ./node_modules/.bin/ts-node -r ./hook index.ts
 
@@ -246,17 +255,17 @@ echo 'declare module "*.css" {
 echo 'declare module "*.html" {
   const content: string;
   export default content;
-}' >> "typings/*.html/index.d.ts" 
+}' >> "typings/*.html/index.d.ts"
 ```
 
-We've already included *typings* folder in `tsconfig.json`, but you can call it anything you want as long as it's referenced:
+We've already included _typings_ folder in `tsconfig.json`, but you can call it anything you want as long as it's referenced:
 
 ```json
 {
   "compilerOptions": {
     // ...
     "typeRoots": ["node_modules/@types", "typings"]
-  },
+  }
   // ...
 }
 ```
@@ -271,8 +280,8 @@ Run again and enjoy refreshing teal background:
 ## Nice, what's next?
 
 You could:
-- Add pre- or post-processing step for the styles (e.g. use `sass`,`less` or `postcss`) or some template engine for HTML (e.g. `liquid`, `haml` or `pug`. 
+
+- Add pre- or post-processing step for the styles (e.g. use `sass`,`less` or `postcss`) or some template engine for HTML (e.g. `liquid`, `haml` or `pug`.
 - Make a GraphQL server using `.graphql` files directly.
 - Write unit tests for your front-end JavaScript with lightweight or custom test runners.
 - Make your own code transpiler/bundler
-

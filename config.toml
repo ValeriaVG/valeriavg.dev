@@ -1,6 +1,0 @@
-baseURL = 'https://valeriavg.dev/'
-languageCode = 'en'
-title = 'ValeriaVG'
-
-[taxonomies]
-  tag = 'tags'

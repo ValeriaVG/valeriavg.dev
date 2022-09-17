@@ -1,0 +1,11 @@
+{
+  "tasks": {
+    "start": "deno run --allow-net --allow-read --allow-env index.tsx",
+    "dev": "deno run --allow-net --allow-read --watch --allow-env index.tsx"
+  },
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "dom.asynciterable", "deno.ns"],
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment"
+  }
+}
