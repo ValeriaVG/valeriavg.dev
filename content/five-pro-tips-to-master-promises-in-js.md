@@ -4,11 +4,14 @@ date: 2021-06-05T09:25:36Z
 tags: [javascript, node, tutorial, beginners]
 draft: false
 dev_to: "https://dev.to/valeriavg/five-pro-tips-to-master-promises-in-js-c2h"
+summary: |
+  Events handling and promises in particular are hands down the best JavaScript feature. You're probably familiar with the concept itself, but in short, a Promise in JavaScript is a promise to call back with the result.
 ---
 
-Events handling and promises in particular are hands down the best JavaScript feature. You're probably familiar with the concept itself, but in short, a `Promise` in JavaScript is *a promise to call back with the result*. 
-<!--more-->
+Events handling and promises in particular are hands down the best JavaScript feature. You're probably familiar with the concept itself, but in short, a `Promise` in JavaScript is _a promise to call back with the result_.
+
 Therefore, a promise can be constructed with two functions: one to be called on success and the other - in case of error. Here is a promise that would randomly fail or reject after one second:
+
 ```js
 const promise = new Promise((resolve, reject) => {
   setTimeout(() => {
@@ -21,6 +24,7 @@ const promise = new Promise((resolve, reject) => {
   }, 1_000);
 });
 ```
+
 Try this in your browser console or in node repl (run `node` with no arguments). You should see `true` or `false` logged to a console after a second and, if promise failed, you'll see an error message (or a warning that promise was not caught in node). Now that we got something to play with, the tips I've promised (pun intended):
 
 ## Tip #1: Promise starts right away
@@ -29,41 +33,57 @@ As you've seen in the example, a promise will resolve or reject even if it have 
 
 ## Tip #2: Once complete, promise will yield the same result over and over
 
-Try running `promise.then(console.log)` in the same console or repl where you defined the promise from previous example. It'll log the exact same result over and over, without a delay. Try logging `console.log(promise)`, what do you see? I bet it's either: 
+Try running `promise.then(console.log)` in the same console or repl where you defined the promise from previous example. It'll log the exact same result over and over, without a delay. Try logging `console.log(promise)`, what do you see? I bet it's either:
+
 ```js
 Promise {<rejected>: "On no!"}
 ```
+
 Or , if it has resolved,:
+
 ```js
 Promise { "I am resolved!" }
 ```
-You've probably guessed by now, that a promise can be in one of the three states: `pending`,`rejected` or `fulfilled` (resolved to a value). The trick here is that it'll stay in its final state till the garbage collector wipes it from existence 🪦. 
+
+You've probably guessed by now, that a promise can be in one of the three states: `pending`,`rejected` or `fulfilled` (resolved to a value). The trick here is that it'll stay in its final state till the garbage collector wipes it from existence 🪦.
 
 ## Tip #3: Promise.prototype.then accepts two callbacks
 
 You can get promise results by chaining `then` and `catch` to it:
+
 ```js
-promise.then(console.log).catch(console.error)
+promise.then(console.log).catch(console.error);
 ```
+
 Or, simply:
+
 ```js
-promise.then(console.log,console.error)
+promise.then(console.log, console.error);
 ```
 
 ## Tip #4: Promise.prototype.then and Promise.prototype.catch return a new promise
 
-If you `console.log(promise.then(()=>{},()=>{}))`, you'll get `Promise { <pending> }`, even if the promise have been resolved. This, however, does not mean that the async operation itself will be retried, just that these methods *always* create a new promise, even if your callback functions are synchronous.
+If you `console.log(promise.then(()=>{},()=>{}))`, you'll get `Promise { <pending> }`, even if the promise have been resolved. This, however, does not mean that the async operation itself will be retried, just that these methods _always_ create a new promise, even if your callback functions are synchronous.
 
 ```js
-promise === promise.then(()=>{},()=>{})
+promise ===
+  promise.then(
+    () => {},
+    () => {}
+  );
 // false
-promise === promise.then(()=>promise,()=>promise)
+promise ===
+  promise.then(
+    () => promise,
+    () => promise
+  );
 // false
 ```
 
 ## Tip #5: Use Promise.all, Promise.race and async/await when appropriate
 
-Before ES5 introduced `async-await` syntax we all lived in a *callback hell*:
+Before ES5 introduced `async-await` syntax we all lived in a _callback hell_:
+
 ```js
 promise.then(() => {
   promise.then(() => {
@@ -75,7 +95,8 @@ promise.then(() => {
   });
 });
 ```
-But it's important to remember that *async/await* is just a syntax sugar over that construction. In it's core, it still is the same chain, meaning that the next promise won't be *created* until the previous one is fulfilled:
+
+But it's important to remember that _async/await_ is just a syntax sugar over that construction. In it's core, it still is the same chain, meaning that the next promise won't be _created_ until the previous one is fulfilled:
 
 ```js
 const createTimeoutPromise = (n, timeout) =>
@@ -100,17 +121,17 @@ const createTimeoutPromise = (n, timeout) =>
 // Operation took 3.0 s
 ```
 
-Therefore, if you just want it *all done*, no matter in what order, use `Promise.all` to speed things up:
+Therefore, if you just want it _all done_, no matter in what order, use `Promise.all` to speed things up:
 
 ```js
 (async () => {
   const now = Date.now();
   const results = await Promise.all([
-    createTimeoutPromise(1,1_000),
-    createTimeoutPromise(2,999),
-    createTimeoutPromise(3,998),
+    createTimeoutPromise(1, 1_000),
+    createTimeoutPromise(2, 999),
+    createTimeoutPromise(3, 998),
   ]);
-  console.log(results)
+  console.log(results);
   console.log(`Operation took`, ((Date.now() - now) / 1_000).toFixed(1), "s");
 })();
 
@@ -121,18 +142,19 @@ Therefore, if you just want it *all done*, no matter in what order, use `Promise
 // Operation took 1.0 s
 ```
 
-As you can see, you'll still get the results of the promises in the same order as you specified them, despite of the order in which they were fulfilled. 
+As you can see, you'll still get the results of the promises in the same order as you specified them, despite of the order in which they were fulfilled.
 
-In rare cases, you may not need *all* of your promises to fulfil, but *any* of them. Let them `Promise.race` for the sire's favour 👑:
+In rare cases, you may not need _all_ of your promises to fulfil, but _any_ of them. Let them `Promise.race` for the sire's favour 👑:
+
 ```js
 (async () => {
   const now = Date.now();
   const results = await Promise.race([
-    createTimeoutPromise(1,1_000),
-    createTimeoutPromise(2,999),
-    createTimeoutPromise(3,998),
+    createTimeoutPromise(1, 1_000),
+    createTimeoutPromise(2, 999),
+    createTimeoutPromise(3, 998),
   ]);
-  console.log(results)
+  console.log(results);
   console.log(`Operation took`, ((Date.now() - now) / 1_000).toFixed(1), "s");
 })();
 
@@ -145,4 +167,4 @@ In rare cases, you may not need *all* of your promises to fulfil, but *any* of t
 
 Keep in mind, that if any of the promises fail, both `Promise.all` and `Promise.race` will reject.
 
-That's all I had for today, but I *promise* there'll be more (see what I did here?).
+That's all I had for today, but I _promise_ there'll be more (see what I did here?).

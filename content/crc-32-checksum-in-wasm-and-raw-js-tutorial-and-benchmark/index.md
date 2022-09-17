@@ -3,10 +3,14 @@ title: "Crc 32 Checksum in Wasm and Raw Js Tutorial and Benchmark"
 date: 2021-07-07T20:49:55Z
 tags: [webassembly, webdev, performance, tutorial]
 draft: false
+summary: |
+  In this tutorial we'll build a cyclic redundancy check (CRC) hashing function. More specifically, its 32 bit variant called "CRC-32". I bumped into it in the PNG specification, but it's also used in Gzip and bunch of other formats and protocols. In short, it makes a tiny (4 bytes) hash out of whatever binary data you feed to it and changes significantly if data changes even slightly. Of course, such a tiny function is not even close to be crypto secure, therefore it's only used to check if data was transferred correctly.
 ---
 
-In this tutorial we'll build a [cyclic redundancy check (CRC)](https://en.wikipedia.org/wiki/Cyclic_redundancy_check) hashing function. More specifically, its 32 bit variant called "CRC-32". I bumped into it in the PNG specification, but it's also used in Gzip and bunch of other formats and protocols. In short, it makes a tiny (4 bytes) hash out of whatever binary data you feed to it and changes significantly if data changes even slightly. Of course, such a tiny function is not even close to be crypto secure, therefore it's only used to check if data was transferred correctly. 
+In this tutorial we'll build a [cyclic redundancy check (CRC)](https://en.wikipedia.org/wiki/Cyclic_redundancy_check) hashing function. More specifically, its 32 bit variant called "CRC-32". I bumped into it in the PNG specification, but it's also used in Gzip and bunch of other formats and protocols. In short, it makes a tiny (4 bytes) hash out of whatever binary data you feed to it and changes significantly if data changes even slightly. Of course, such a tiny function is not even close to be crypto secure, therefore it's only used to check if data was transferred correctly.
+
 <!--more-->
+
 I love JavaScript, but writing binary algorithm implementations in it is a torture thanks to signed integers conversion in bitwise operations. So, I've decided to write implementation in a strongly typed system language, my other favourite, `rust` and compile it to WebAssembly.
 
 ## What is WebAssembly
@@ -16,26 +20,32 @@ WebAssembly (a.k.a. WASM) provides a virtual machine that can be created from Ja
 ## Installing rust and wasm tooling
 
 If you are on a MacOS/Linux/other Unix machine installing rust is as simple as running this command in a terminal and following interactive instructions:
+
 ```sh
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
+
 To install on other OS refer to [rustup installation instructions](https://www.rust-lang.org/tools/install)
 
 Once you're done this should work:
+
 ```sh
 rustc --version
 # rustc 1.53.0 (53cb7b09b 2021-06-17)
 ```
 
-Next step is to install `wasm-pack`, a tool that compiles your WebAssembly module, generates JavaScript glue and TypeScript types for it. 
+Next step is to install `wasm-pack`, a tool that compiles your WebAssembly module, generates JavaScript glue and TypeScript types for it.
 
 If you're on a Unix machine the command is:
+
 ```sh
 curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 ```
+
 For other OS: refer to [wasm-pack installation instructions](https://rustwasm.github.io/wasm-pack/installer/).
 
 Once again, make sure it's working:
+
 ```sh
 wasm-pack --version
 # wasm-pack 0.10.0
@@ -44,11 +54,13 @@ wasm-pack --version
 ## Creating rust project
 
 Rust comes with its own dependency manager `cargo`. It also helps with some routine operations, like project creation. Run this command to generate project folder and navigate into it:
+
 ```sh
 cargo new --lib wasm-test && cd wasm-test
 ```
 
-We should add crate type (*cdylib*) and the wasm binding dependency (*wasm-bindgen*) in the generated `Cargo.toml`:
+We should add crate type (_cdylib_) and the wasm binding dependency (_wasm-bindgen_) in the generated `Cargo.toml`:
+
 ```toml
 [package]
 name = "wasm-test"
@@ -65,6 +77,7 @@ wasm-bindgen = "0.2"
 ```
 
 Now let's add the CRC-32 algorithm implementation to `src/lib.rs`:
+
 ```rs
 use wasm_bindgen::prelude::*;
 // Pre-computed, see tests
@@ -151,9 +164,10 @@ mod tests {
 
 The implementation uses pre-computed table for each byte value from 0x00 to 0xff and boils down to couple bitwise operations.
 
-Macros `#[wasm_bindgen]` marks the function we want to export. 
+Macros `#[wasm_bindgen]` marks the function we want to export.
 
 The unit tests in the end of the file can be run with:
+
 ```sh
 cargo test
 
@@ -167,10 +181,12 @@ cargo test
 ## Compiling WASM for Web Browser
 
 Run this command:
+
 ```sh
 wasm-pack build --target web --release
 ```
-It creates a `pkg` folder with WASM module, TypeScript types, `package.json` and the main `wasm_test.js` file. 
+
+It creates a `pkg` folder with WASM module, TypeScript types, `package.json` and the main `wasm_test.js` file.
 
 Let's create `index.html` file in the project root and import the generated script from there:
 
@@ -215,6 +231,7 @@ Hello,WASM!</textarea
 ```
 
 For security reasons you won't be able to test this html file by simply opening it, but you can start a simple file server with:
+
 ```sh
 npx serve .
 # npx: installed 88 in 6.469s
@@ -231,14 +248,15 @@ npx serve .
 #
 ```
 
-If you can't run this command, that probably means that either [NodeJS](https://nodejs.org/en/download/) or NPM is not installed. 
+If you can't run this command, that probably means that either [NodeJS](https://nodejs.org/en/download/) or NPM is not installed.
 
 Navigate your browser to `http://localhost:5000` and click the "Calculate CRC-32" button to see something like this:
 ![CRC-32 of "Hello,WASM!" is "ce9e250b"](./hello_wasm.png)
- 
+
 ## Comparing JS and WASM performance
 
 Let's create nearly identical JavaScript implementation of CRC-32 in `crc.js`:
+
 ```js
 const CRC_TABLE = new Uint32Array([
   0, 1996959894, 3993919788, 2567524794, 124634137, 1886057615, 3915621685,
@@ -298,9 +316,10 @@ function update_crc(crc, buf) {
 export default (buf) => (update_crc(0xffffffff, buf) ^ 0xffffffff) >>> 0;
 ```
 
-The only thing that differs is the unsigned right shift (`>>>`) we added to get rid of signs in JS numbers. 
+The only thing that differs is the unsigned right shift (`>>>`) we added to get rid of signs in JS numbers.
 
 We can now include this implementation along with some performance measurements in `index.html`:
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -358,6 +377,7 @@ Reload the page and check it out (open console to see performance information):
 Not bad, WASM is nearly three times faster on 5 paragraphs of text, but both of them are still very fast. How about a bigger challenge?
 
 Update `index.html` one last time:
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -441,6 +461,7 @@ Here are the results I got in Edge, Safari and Firefox:
 ## Using WASM from NodeJS
 
 Similarly to web target, we can build NodeJS-friendly package by running:
+
 ```sh
 wasm-pack build --target nodejs --out-dir pkg-node --release
 ```
@@ -448,6 +469,7 @@ wasm-pack build --target nodejs --out-dir pkg-node --release
 The contents of `pkg-node` are mostly the same as web `pkg`, except for `wasm_test.js`, that now reads WASM module from the file system.
 
 Create `index.js` with:
+
 ```js
 const { PerformanceObserver, performance } = require("perf_hooks");
 const crypto = require("crypto");
@@ -482,6 +504,7 @@ crypto.randomBytes(size, (err, data) => {
 ```
 
 The imported CommonJS script `crc.cjs` is identical to `crc.js` apart from the last line ( export default => module.exports):
+
 ```js
 const CRC_TABLE = new Uint32Array([
   0, 1996959894, 3993919788, 2567524794, 124634137, 1886057615, 3915621685,
@@ -543,6 +566,7 @@ module.exports = (buf) => (update_crc(0xffffffff, buf) ^ 0xffffffff) >>> 0;
 ```
 
 Finally, run the script:
+
 ```sh
 node index
 # Generated random 10MB of data
@@ -561,4 +585,3 @@ wasm 389.698142 ms
 js   25945.486315 ms
 wasm 3763.860294 ms
 ```
-
