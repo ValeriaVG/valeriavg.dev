@@ -129,13 +129,14 @@ const render = (app: JSX.ElementChildrenAttribute) => {
 };
 
 serve((req: Request) => {
-  const { pathname } = new URL(req.url);
+  const { pathname: rawPathname } = new URL(req.url);
 
-  if (pathname === "/") {
+  if (rawPathname === "/") {
     return new Response(render(<HomePage articles={articlesByPubDate} />), {
       headers: { "content-type": "text/html" },
     });
   }
+  const pathname = rawPathname.replace(/\/$/, "");
 
   if (pathname === "/sitemap.xml") {
     return new Response(sitemap, {
