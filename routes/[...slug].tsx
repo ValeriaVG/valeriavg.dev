@@ -4,7 +4,6 @@ import { Info, Layout } from "$/blocks/mod.ts";
 import { Article } from "../types.ts";
 import { lookup } from "https://deno.land/x/mime_types@1.0.0/mod.ts";
 import { content, staticContent } from "$/content/mod.ts";
-import Content from "../islands/Content.tsx";
 
 interface Data {
   article: Article;
@@ -44,13 +43,11 @@ export default function ArticlePage({
     <Layout>
       <Head>
         <title>{title} - ValeriaVG</title>
-        <link rel="stylesheet" href="/dracula.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js">
-        </script>
+        <link rel="stylesheet" href="/prism.css" />
       </Head>
       <h1 style="margin-bottom: 0.5rem">{title}</h1>
       <Info tags={tags} date={date} />
-      <Content html={content} />
+      <div dangerouslySetInnerHTML={{ __html: content }}></div>
       <section class="links">
         {!!dev_to && (
           <a

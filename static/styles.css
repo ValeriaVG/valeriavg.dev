@@ -88,6 +88,8 @@ blockquote {
   padding: 1rem;
   border-radius: 0.25rem;
   overflow-x: auto;
+  background: #2d2d2d;
+  color: white;
 }
 .info {
   display: flex;

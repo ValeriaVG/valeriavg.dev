@@ -1,12 +1,14 @@
 import loadFS from "$/lib/memfs.ts";
 import { Article } from "$/types.ts";
 import { extract } from "https://deno.land/std@0.145.0/encoding/front_matter.ts";
-import { Marked, MarkedOptions, Renderer } from "https://deno.land/x/markdown@v2.0.0/mod.ts";
+import * as Marked from "https://esm.sh/marked@4.0.12"
+import Renderer from "$/lib/renderer.ts";
 
 const staticContent: Record<string, Uint8Array> = {}
 const rawContent = await loadFS("./content");
 const content: Record<string, Article> = {};
-const defaultRenderer = new Renderer();
+
+
 
 for (const pathname in rawContent) {
     if (!pathname.endsWith(".md")) {
@@ -19,29 +21,8 @@ for (const pathname in rawContent) {
         const data = extract<Omit<Article, "url" | "content">>(text);
         const article = { ...data.attrs } as Article;
         article.url = pathname.replace(/(\/index|)\.md$/, "");
-
-        const options = new MarkedOptions();
-        options.renderer = new Renderer();
-        options.renderer.link = (href, title, text) => {
-            if (href.startsWith("http")) {
-                return `<a href="${href}"${title ? ` title="${title}"` : ""
-                    } rel="noopener noreferrer">${text}</a>`;
-            }
-            return defaultRenderer.link(href, title, text);
-        };
-
-        options.renderer.image = (
-            href: string,
-            title: string,
-            text: string
-        ): string => {
-            if (href.startsWith(".")) {
-                href = article.url + href.slice(1);
-            }
-            return defaultRenderer.image(href, title, text);
-        };
-
-        article.content = Marked.parse(data.body, options).content;
+        const renderer = new Renderer(article.url)
+        article.content = await Marked.marked(data.body, { renderer });
         content[article.url] = article;
     } catch (error) {
         error.message = `${error.message} while parsing /content${pathname}`;
