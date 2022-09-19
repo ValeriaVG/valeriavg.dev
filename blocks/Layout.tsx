@@ -1,22 +1,19 @@
-import {
-  Fragment,
-  h,
-  Helmet,
-} from "https://deno.land/x/nano_jsx@v0.0.33/mod.ts";
-export default function Layout({
+import { Head } from "$fresh/runtime.ts";
+import { ComponentChildren } from "preact";
+export function Layout({
   children,
 }: {
-  children: JSX.ElementChildrenAttribute;
+  children: ComponentChildren;
 }) {
   return (
-    <Fragment>
-      <Helmet>
+    <>
+      <Head>
         <html lang="en" />
-        <meta charset="utf-8" />
+        <meta charSet="utf-8" />
         <link rel="icon" href="/favicon.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="/styles.css" />
-      </Helmet>
+      </Head>
 
       <header>
         <a href="/" class="logo">
@@ -48,6 +45,6 @@ export default function Layout({
       </header>
       <main>{children}</main>
       <footer>©Valeria Viana Gusmao {new Date().getFullYear()}</footer>
-    </Fragment>
+    </>
   );
 }

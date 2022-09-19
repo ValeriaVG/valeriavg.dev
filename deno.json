@@ -1,11 +1,10 @@
 {
   "tasks": {
-    "start": "deno run --allow-net --allow-read --allow-env index.tsx",
-    "dev": "deno run --allow-net --allow-read --watch --allow-env index.tsx"
+    "start": "deno run -A --watch=static/,routes/ dev.ts"
   },
+  "importMap": "./import_map.json",
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "dom.asynciterable", "deno.ns"],
-    "jsxFactory": "h",
-    "jsxFragmentFactory": "Fragment"
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
   }
 }
