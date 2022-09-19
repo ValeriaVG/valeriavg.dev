@@ -1,11 +1,10 @@
-import { h, Fragment } from "https://deno.land/x/nano_jsx@v0.0.33/mod.ts";
 import { Article } from "../types.ts";
-import Info from "./info.tsx";
+import { Info } from "$/blocks/mod.ts";
 
 export function List({ articles }: { articles: Article[] }) {
   return (
-    <Fragment>
-      {articles.map((article) => (
+    <>
+      {articles?.map((article) => (
         <article>
           <a href={article.url} class="title">
             <h2>{article.title}</h2>
@@ -27,6 +26,6 @@ export function List({ articles }: { articles: Article[] }) {
         border-top: 1px solid gainsboro;
       }`}
       </style>
-    </Fragment>
+    </>
   );
 }

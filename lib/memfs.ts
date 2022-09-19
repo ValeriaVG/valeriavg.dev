@@ -2,7 +2,7 @@ import { join } from "https://deno.land/std@0.156.0/path/mod.ts";
 
 export default async function loadFS(dir: string): Promise<Record<string, Uint8Array>> {
     const files: Record<string, Uint8Array> = {}
-    const loadDir = async (path: string) => {
+    const loadDir = async (path = '') => {
         const entries = await Deno.readDir(join(dir, path))
         for await (const entry of entries) {
             const entryPath = join(path, entry.name)
@@ -16,6 +16,6 @@ export default async function loadFS(dir: string): Promise<Record<string, Uint8A
             }
         }
     }
-    await loadDir('/')
+    await loadDir()
     return files
 }
