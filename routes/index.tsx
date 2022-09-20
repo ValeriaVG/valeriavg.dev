@@ -19,6 +19,10 @@ export default function HomePage({ data }: PageProps<Data>) {
     <Layout>
       <Head>
         <title>ValeriaVG</title>
+        <meta
+          name="description"
+          content="Blog about frontend, backend and everything in between"
+        />
       </Head>
       <List articles={data.articles} />
     </Layout>

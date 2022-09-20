@@ -29,6 +29,10 @@ export default function TagPage({
     <Layout>
       <Head>
         <title>#{tag} - ValeriaVG</title>
+        <meta
+          name="description"
+          content={`Blog posts about ${tag}`}
+        />
       </Head>
       <h1>#{tag}</h1>
       <List articles={articles} />

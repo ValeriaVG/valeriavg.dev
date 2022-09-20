@@ -37,12 +37,17 @@ export default function ArticlePage({
     content,
     dev_to,
     twitter,
+    summary,
   } = data.article;
 
   return (
     <Layout>
       <Head>
         <title>{title} - ValeriaVG</title>
+        <meta
+          name="description"
+          content={summary}
+        />
         <link rel="stylesheet" href="/prism.css" />
       </Head>
       <h1 style="margin-bottom: 0.5rem">{title}</h1>
