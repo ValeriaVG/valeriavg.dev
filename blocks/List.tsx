@@ -6,12 +6,12 @@ export function List({ articles }: { articles: Article[] }) {
     <>
       {articles?.map((article) => (
         <article>
-          <a href={article.url} class="title">
+          <a href={"/" + article.url} class="title">
             <h2>{article.title}</h2>
           </a>
           <Info tags={article.tags} date={article.date} />
           <p>{article.summary}</p>
-          <a href={article.url}>[read more]</a>
+          <a href={"/" + article.url}>[read more]</a>
         </article>
       ))}
       <style type="text/css">
