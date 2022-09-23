@@ -19,7 +19,7 @@ ${Object.keys(articlesByTag)
 ${articlesByPubDate
       .map(
         (article) => `<url>
-    <loc>${BASE_URL}${article.url}</loc>
+    <loc>${BASE_URL}/${article.url}</loc>
     <lastmod>${article.date.toISOString()}</lastmod>
   </url>`
       )
