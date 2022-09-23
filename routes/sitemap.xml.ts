@@ -11,7 +11,7 @@ const sitemap: string = (() => {
 ${Object.keys(articlesByTag)
       .map(
         (tag) => `<url>
-  <loc>${BASE_URL}tags/${tag}</loc>
+  <loc>${BASE_URL}/tags/${tag}</loc>
   <lastmod>${articlesByTag[tag][0].date.toISOString()}</lastmod>
 </url>`
       )
