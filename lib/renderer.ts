@@ -36,7 +36,7 @@ export default class Renderer extends Marked.Renderer {
     link(href: string, title: string, text: string) {
         if (href.startsWith("http")) {
             return `<a href="${href}"${title ? ` title="${title}"` : ""
-                } rel="noopener noreferrer">${text}</a>`;
+                } rel="noopener noreferrer" target="_blank">${text}</a>`;
         }
         return super.link(href, title, text);
     }
