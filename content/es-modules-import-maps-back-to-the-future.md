@@ -3,11 +3,12 @@ title: "ES Modules & Import Maps: Back to the Future"
 date: 2022-09-24T09:13:15Z
 tags: [javascript, webdev, beginners, esm]
 draft: false
+twitter: "1573572870592135169"
 summary: |
   There was a time when creating a web page meant creating an html file, yet nowadays it seems impossible to build any frontend without the bottomless pit of node_modules, yielding a finely chewed yet hefty bundle.xyz.js. Well, I got to learn that it might not be the case soon and, naturally, I feel the urge to share it with the rest of you.
 ---
 
-There was a time when creating a web page meant creating an html file, yet nowadays it seems impossible to build any frontend without the bottomless pit of node_modules, yielding a finely chewed yet hefty _bundle.xyz.js_. Well, I got to learn that it might not be the case soon and, naturally, I feel the urge to share it with the rest of you.
+There was a time when creating a web page meant creating an html file, yet nowadays it seems impossible to build any frontend without the bottomless pit of node*modules, yielding a finely chewed yet hefty \_bundle.xyz.js*. Well, I got to learn that it might not be the case soon and, naturally, I feel the urge to share it with the rest of you.
 
 ## Start with HTML
 
