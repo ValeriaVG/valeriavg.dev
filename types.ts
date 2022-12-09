@@ -2,7 +2,7 @@ export interface Article {
     url: string
     title: string
     tags: string[]
-    date: Date
+    date: string
     summary?: string
     content: string
     dev_to?: string

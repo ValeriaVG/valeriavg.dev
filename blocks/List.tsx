@@ -9,7 +9,7 @@ export function List({ articles }: { articles: Article[] }) {
           <a href={"/" + article.url} class="title">
             <h2>{article.title}</h2>
           </a>
-          <Info tags={article.tags} date={article.date} />
+          <Info tags={article.tags} date={new Date(article.date)} />
           <p>{article.summary}</p>
           <a href={"/" + article.url}>[read more]</a>
         </article>

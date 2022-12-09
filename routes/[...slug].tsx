@@ -10,7 +10,7 @@ interface Data {
 }
 
 export const handler: Handlers<Data> = {
-  GET(_req, ctx) {
+  async GET(_req, ctx) {
     const slug = ctx.params.slug;
     const article = content[slug];
     if (article) {
@@ -19,7 +19,7 @@ export const handler: Handlers<Data> = {
     const file = staticContent[slug];
     if (file) {
       const mime = lookup(slug);
-      return new Response(file, {
+      return new Response(await Deno.readFile(file), {
         headers: { "content-type": mime || "application/octet-stream" },
       });
     }
@@ -51,7 +51,7 @@ export default function ArticlePage({
         <link rel="stylesheet" href="/prism.css" />
       </Head>
       <h1 style="margin-bottom: 0.5rem">{title}</h1>
-      <Info tags={tags} date={date} />
+      <Info tags={tags} date={new Date(date)} />
       <div dangerouslySetInnerHTML={{ __html: content }}></div>
       <section class="links">
         {!!dev_to && (

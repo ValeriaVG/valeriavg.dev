@@ -12,7 +12,7 @@ ${Object.keys(articlesByTag)
       .map(
         (tag) => `<url>
   <loc>${BASE_URL}/tags/${tag}</loc>
-  <lastmod>${articlesByTag[tag][0].date.toISOString()}</lastmod>
+  <lastmod>${new Date(articlesByTag[tag][0].date).toISOString()}</lastmod>
 </url>`
       )
       .join("\n")}
@@ -20,13 +20,13 @@ ${articlesByPubDate
       .map(
         (article) => `<url>
     <loc>${BASE_URL}/${article.url}</loc>
-    <lastmod>${article.date.toISOString()}</lastmod>
+    <lastmod>${new Date(article.date).toISOString()}</lastmod>
   </url>`
       )
       .join("\n")}
   <url>
     <loc>${BASE_URL}/</loc>
-    <lastmod>${articlesByPubDate[0].date.toISOString()}</lastmod>
+    <lastmod>${new Date(articlesByPubDate[0].date).toISOString()}</lastmod>
   </url>
 </urlset>`;
 })();
