@@ -3,6 +3,8 @@ title: "Not broken, just different"
 date: 2023-02-10T06:35:13Z
 tags: [mentalhealth, beginners, motivation]
 draft: false
+twitter: "1625356771094061059"
+dev_to: "https://dev.to/valeriavg/im-autistic-and-theres-something-i-want-to-do-with-it-3n1k"
 summary: |
   In the beginning of January'23 I was laying on my bed and watching "Love on the spectrum". You see, the person I love dearly has been just diagnosed with ADHD and autism. The second part actually came as a surprise: how can they be autistic?!
 ---
