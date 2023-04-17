@@ -3,8 +3,8 @@ title: "Coder's block"
 date: 2023-04-16T06:11:36Z
 tags: [devjournal, productivity, beginners, motivation]
 draft: false
-# twitter: "1625356771094061059"
-# dev_to: "https://dev.to/valeriavg/im-autistic-and-theres-something-i-want-to-do-with-it-3n1k"
+twitter: "1647857429822992384"
+dev_to: "https://dev.to/valeriavg/coders-block-4p33"
 summary: |
   I often find myself in a state where I simply can’t code. You can call it procrastination, I prefer the term "coder’s block" as it makes me feel less guilty about it. But the truth is it happens every once in a while and I don’t like it.
 ---
