@@ -1,0 +1,13 @@
+on:
+  issue_comment:
+    types: [created]
+jobs:
+  example_comment_pr:
+    runs-on: ubuntu-latest
+    name: Magic Eight Ball Comments
+    permissions:
+        pull-requests: write
+        issues: write
+    steps:
+      - name: Answer
+        uses: ValeriaVG/actions-magic-8-ball@v1
