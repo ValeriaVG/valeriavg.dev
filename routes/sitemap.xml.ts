@@ -32,6 +32,9 @@ ${articlesByPubDate
 })();
 
 export const handler: Handlers = {
+  HEAD(_req, _ctx) {
+    return new Response(null, { headers: { 'content-type': 'application/xml', 'content-length': new Blob([sitemap]).size.toString()} })
+  },
   GET(_req, _ctx) {
     return new Response(sitemap, { headers: { 'content-type': 'application/xml' } })
   }

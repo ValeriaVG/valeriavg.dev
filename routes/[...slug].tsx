@@ -1,5 +1,5 @@
 import { Head } from "$fresh/runtime.ts";
-import { Handlers, PageProps } from "$fresh/server.ts";
+import { Handler, Handlers, PageProps } from "$fresh/server.ts";
 import { Info, Layout } from "$/blocks/mod.ts";
 import { Article } from "../types.ts";
 import { lookup } from "https://deno.land/x/mime_types@1.0.0/mod.ts";
@@ -9,46 +9,56 @@ interface Data {
   article: Article;
 }
 
-export const handler: Handlers<Data> = {
-  async GET(_req, ctx) {
-    const slug = ctx.params.slug;
-    const article = content[slug];
-    if (article) {
-      return ctx.render({ article });
-    }
-    const file = staticContent[slug];
-    if (file) {
-      const mime = lookup(slug);
-      return new Response(await Deno.readFile(file), {
-        headers: { "content-type": mime || "application/octet-stream" },
-      });
-    }
-    return ctx.renderNotFound();
-  },
+const renderArticle: Handler<Data> = async (_req, ctx) => {
+  const slug = ctx.params.slug;
+  const article = content[slug];
+  if (article) {
+    return ctx.render({ article });
+  }
+  const file = staticContent[slug];
+  if (file) {
+    const mime = lookup(slug);
+    return new Response(await Deno.readFile(file), {
+      headers: { "content-type": mime || "application/octet-stream" },
+    });
+  }
+  return ctx.renderNotFound();
 };
 
-export default function ArticlePage({
-  data,
-}: PageProps<Data>) {
-  const {
-    title,
-    tags,
-    date,
-    content,
-    dev_to,
-    twitter,
-    summary,
-  } = data.article;
+export const handler: Handlers<Data> = {
+  GET: renderArticle,
+  HEAD: renderArticle,
+};
+
+export default function ArticlePage({ data, params }: PageProps<Data>) {
+  const { title, tags, date, content, dev_to, twitter, summary } = data.article;
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: title,
+    datePublished: new Date(date).toISOString(),
+    author: [
+      {
+        "@type": "Person",
+        name: "Valeria Viana Gusmao"
+      },
+    ],
+    abstract: summary,
+    keywords: tags
+  };
 
   return (
     <Layout>
       <Head>
         <title>{title} - ValeriaVG</title>
-        <meta
-          name="description"
-          content={summary}
-        />
+        <meta name="description" content={summary} />
         <link rel="stylesheet" href="/prism.css" />
+        <link rel="canonical" href={`https://valeriavg.dev/${params.slug}`} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
       </Head>
       <h1 style="margin-bottom: 0.5rem">{title}</h1>
       <Info tags={tags} date={new Date(date)} />
@@ -87,8 +97,7 @@ export default function ArticlePage({
           data-outline-color="#000000"
           data-font-color="#000000"
           data-coffee-color="#FFDD00"
-        >
-        </script>
+        ></script>
       </section>
     </Layout>
   );

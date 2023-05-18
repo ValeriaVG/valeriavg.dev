@@ -9,6 +9,9 @@ interface Data {
 }
 
 export const handler: Handlers<Data> = {
+  HEAD(_req, ctx) {
+    return ctx.render({ articles: articlesByPubDate });
+  },
   GET(_req, ctx) {
     return ctx.render({ articles: articlesByPubDate });
   },
