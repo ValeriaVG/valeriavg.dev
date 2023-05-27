@@ -1,10 +1,6 @@
 import { Head } from "$fresh/runtime.ts";
 import { ComponentChildren } from "preact";
-export function Layout({
-  children,
-}: {
-  children: ComponentChildren;
-}) {
+export function Layout({ children }: { children: ComponentChildren }) {
   return (
     <>
       <Head>
@@ -12,6 +8,20 @@ export function Layout({
         <link rel="icon" href="/favicon.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="/styles.css" />
+
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-0K48DBJ4GD"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-0K48DBJ4GD');`,
+          }}
+        />
       </Head>
 
       <header>
