@@ -7,5 +7,5 @@ export interface Article {
     content: string
     dev_to?: string
     twitter?: string
-    isDraft?: boolean
+    draft?: boolean
 }
