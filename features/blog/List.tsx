@@ -2,13 +2,20 @@ import { css } from "@emotion/css";
 import { Article } from "#types";
 import { Info } from "./Info.tsx";
 
-export function List({ articles }: { articles: Article[] }) {
+export function List({
+  articles,
+  linkOnly,
+}: {
+  articles: Article[];
+  linkOnly?: boolean;
+}) {
+  if (!articles.length) return null;
   return (
     <>
-      {articles?.map((article) => (
+      {articles.map((article) => (
         <article class={styles.article}>
           <a href={"/" + article.url} class={styles.title}>
-            <h2>{article.title}</h2>
+            {linkOnly ? article.title : <h2>{article.title}</h2>}
           </a>
           <Info tags={article.tags} date={new Date(article.date)} />
           <p>{article.summary}</p>
@@ -25,6 +32,10 @@ const styles = {
     "& + article": {
       borderTop: "1px solid gainsboro",
     },
+    '>a': css({
+      fontSize: '1rem',
+      fontWeight: 'bold'
+    })
   }),
   title: css({
     textDecoration: "none",

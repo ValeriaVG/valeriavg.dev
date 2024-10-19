@@ -3,8 +3,15 @@ import Head, { Meta } from "#core/Head.tsx";
 import { raw } from "hono/html";
 import { Info } from "./Info.tsx";
 import { css } from "@emotion/css";
+import { List } from "./List.tsx";
 
-export default function ArticlePage({ article }: { article: Article }) {
+export default function ArticlePage({
+  article,
+  relatedArticles,
+}: {
+  article: Article;
+  relatedArticles: Article[];
+}) {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -35,7 +42,6 @@ export default function ArticlePage({ article }: { article: Article }) {
       </script>
       <h1 style="margin-bottom: 0.5rem">{article.title}</h1>
       <Info tags={article.tags} date={new Date(article.date)} />
-
       <div>{raw(article.content)}</div>
       <section class={styles.links}>
         {!!article.dev_to && (
@@ -73,6 +79,12 @@ export default function ArticlePage({ article }: { article: Article }) {
           data-coffee-color="#FFDD00"
         ></script>
       </section>
+      {relatedArticles.length > 0 && (
+        <section class={styles.related}>
+          <header>Related articles</header>
+          <List articles={relatedArticles} linkOnly />
+        </section>
+      )}
     </main>
   );
 }
@@ -98,5 +110,12 @@ const styles = {
     background: "#1da1f2",
     padding: "0.5rem 1rem",
     textDecoration: "none",
+  }),
+  related: css({
+    marginTop: "2rem",
+    header: {
+      fontSize: "1.25rem",
+      fontWeight: "bold",
+    },
   }),
 };

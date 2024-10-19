@@ -41,7 +41,7 @@ export const Meta = ({
   return (
     <Head>
       <title>{title} - ValeriaVG</title>
-      <meta name="description" content={description} />
+      {description && <meta name="description" content={description} />}
       {canonical && <link rel="canonical" href={canonical} />}
     </Head>
   );

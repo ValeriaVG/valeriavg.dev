@@ -1,15 +1,29 @@
 import { Meta } from "#core/Head.tsx";
 import type { Article } from "#types";
 import { List } from "./List.tsx";
+import Pagination from "./Pagination.tsx";
 
-export default function HomePage({articles}:{articles: Article[]}) {
+export default function HomePage({
+  articles,
+  page,
+  totalPages,
+}: {
+  articles: Article[];
+  page: number;
+  totalPages: number;
+}) {
   return (
     <main>
       <Meta
-        title="Blog posts"
-        description="Blog about frontend, backend and everything in between"
+        title={page > 1 ? `Blog posts / Page ${page}` : "Blog posts"}
+        description={
+          page > 1
+            ? "Blog about frontend, backend and everything in between"
+            : undefined
+        }
       />
       <List articles={articles} />
+      <Pagination current={page} total={totalPages} baseUrl="" />
     </main>
   );
 }
