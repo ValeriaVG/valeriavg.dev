@@ -67,7 +67,6 @@ export default class Renderer extends Marked.Renderer {
                 ? Prism.languages[language]
                 : undefined;
         if (grammar === undefined) {
-            console.log(language)
             return `<pre><code class="notranslate">${htmlEscape(code)}</code></pre>`;
         }
         const html = Prism.highlight(code, grammar, language!);

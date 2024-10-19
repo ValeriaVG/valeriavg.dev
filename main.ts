@@ -1,10 +1,17 @@
-/// <reference no-default-lib="true" />
-/// <reference lib="dom" />
-/// <reference lib="dom.iterable" />
-/// <reference lib="dom.asynciterable" />
-/// <reference lib="deno.ns" />
+import { serveStatic } from "hono/deno";
+import app from "./features/mod.ts";
+import PageNotFound from "#theme/PageNotFound.tsx";
+import { render } from "./core/renderer.tsx";
+import { createElement } from "hono/jsx";
 
-import { start } from "$fresh/server.ts";
-import manifest from "./fresh.gen.ts";
-
-await start(manifest);
+app.use(
+  "/:filename{.+\\.(png|svg|jpeg|jpg|txt|css)$}",
+  serveStatic({
+    root: "./static",
+  })
+);
+app.notFound((c) => {
+  const rendered = render({ children: createElement(PageNotFound, {}) });
+  return c.html(rendered, 404);
+});
+Deno.serve(app.fetch);

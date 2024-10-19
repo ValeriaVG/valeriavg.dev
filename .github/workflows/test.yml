@@ -1,0 +1,10 @@
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2.0.0
+      - run: deno task test
+            
