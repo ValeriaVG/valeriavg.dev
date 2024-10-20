@@ -3,11 +3,11 @@ import { cache } from "@emotion/css";
 import { Layout } from "../theme/Layout.tsx";
 import HTML from "./html.ts";
 import createEmotionServer from "@emotion/server/create-instance";
-import type { JSXNode, PropsWithChildren } from "hono/jsx";
+import type { FC, JSX, JSXNode, PropsWithChildren } from "hono/jsx";
 import { HEAD_CONTEXT, addToHead } from "./Head.tsx";
 import { raw } from "hono/html";
 
-export const render = ({ children }: PropsWithChildren) => {
+export const renderPage = ({ children }: PropsWithChildren) => {
   const head: Array<JSXNode | string> = [];
   const body = (
     <HEAD_CONTEXT.Provider value={{ addToHead: addToHead(head) }}>
@@ -22,4 +22,13 @@ export const render = ({ children }: PropsWithChildren) => {
   return <HTML head={head}>{body}</HTML>;
 };
 
-export default jsxRenderer(render);
+export const render = (element: JSXNode) => {
+  const body = element.toString() as string
+  const { extractCriticalToChunks, constructStyleTagsFromChunks } =
+    createEmotionServer(cache);
+  const chunks = extractCriticalToChunks(body);
+  const style = constructStyleTagsFromChunks(chunks);
+  return [style,body].join('')
+}
+
+export default jsxRenderer(renderPage);

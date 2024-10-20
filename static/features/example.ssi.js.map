@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../features/example.ssi.ts"],
+  "sourcesContent": ["console.log('Example')"],
+  "mappings": "AAAA,QAAQ,IAAI,SAAS",
+  "names": []
+}

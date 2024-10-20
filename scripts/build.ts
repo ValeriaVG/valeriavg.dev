@@ -3,11 +3,40 @@ import { extract } from "https://deno.land/std@0.145.0/encoding/front_matter.ts"
 import * as Marked from "https://esm.sh/marked@4.0.12";
 
 import readDir from "#lib/readDir.ts";
-import Renderer from "#lib/markdown/renderer.ts";
+import compileSSI from "#lib/ssi/compile.ts";
 
 const rawContent = await readDir("./content");
 const content: Record<string, Article> = {};
+const ssi: Array<string> = [];
 
+for (const pathname in rawContent) {
+  if (pathname.endsWith(".ssi.tsx")) {
+    ssi.push(pathname);
+    continue;
+  }
+}
+
+const scripts = await compileSSI(ssi.map(name=>`./content/${name}`));
+
+const ssiContents = `
+import type { FC } from 'hono/jsx';
+const SSIComponents = new Map<string,{ Component: FC, script: string }>();
+${
+  scripts
+    ? ssi
+        .map(
+          (pathname, i) =>
+            `SSIComponents.set("${pathname}", { Component: (await import("./${pathname}")).default, script: "${scripts[i]}" })`
+        )
+        .join("\n")
+    : ""
+}
+export default SSIComponents;
+`;
+
+await Deno.writeFile("./content/ssi.ts", new TextEncoder().encode(ssiContents));
+
+const { default: Renderer } = await import("#lib/markdown/renderer.ts");
 for (const pathname in rawContent) {
   if (!pathname.endsWith(".md")) {
     continue;
@@ -32,7 +61,7 @@ const moduleContents = `
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running \`dev.ts\`.
 
-import { Article } from "#types";
+import type { Article } from "#types";
 export const content:Record<string, Article> = ${JSON.stringify(content)};
 
 export const articlesByPubDate = Object.values(content).sort(

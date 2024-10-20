@@ -1,10 +1,16 @@
 import { Hono } from "hono";
 import { serveStatic } from "hono/deno";
-import { articlesByPubDate, articlesByTag, content } from "#content";
+
+import {
+  articlesByPubDate,
+  articlesByTag,
+  content,
+} from "#content";
 import HomePage from "./HomePage.tsx";
 import TagPage from "./TagPage.tsx";
 import ArticlePage from "./ArticlePage.tsx";
 import { paginate } from "./utils.ts";
+
 const app = new Hono();
 
 app.get("/:page{[0-9]+}?", (c) => {

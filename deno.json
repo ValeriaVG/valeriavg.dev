@@ -3,20 +3,23 @@
     "start": "deno run -A main.ts",
     "build": "deno run -A scripts/build.ts",
     "dev": "deno task build && deno run -A --watch main.ts",
-    "test":"BASE_URL= deno test -A"
+    "test": "BASE_URL= deno test -A"
   },
   "imports": {
-    "#core/": "./core/",
     "#content": "./content/mod.ts",
-    "#types": "./types.ts",
-    "#theme/": "./theme/",
+    "#content/": "./content/",
+    "#core/": "./core/",
     "#lib/": "./lib/",
+    "#theme/": "./theme/",
+    "#types": "./types.ts",
     "@emotion/css": "npm:@emotion/css@^11.13.4",
     "@emotion/server": "npm:@emotion/server@^11.11.0",
+    "esbuild": "npm:esbuild@^0.24.0",
     "hono": "npm:hono@^4.6.5"
   },
   "compilerOptions": {
     "jsx": "precompile",
-    "jsxImportSource": "hono/jsx"
+    "jsxImportSource": "hono/jsx",
+    "lib": ["dom", "deno.ns", "deno.window"]
   }
 }
