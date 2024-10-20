@@ -164,6 +164,7 @@ const styles = {
       cursor: "pointer",
       background: "gainsboro",
     },
+    color: 'black',
   }),
   today: css({
     borderColor: "black",

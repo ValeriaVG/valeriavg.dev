@@ -27,8 +27,10 @@ const styles = {
     display: "flex",
     gap: "1rem",
     flexDirection: "column",
+    alignItems: 'center',
     "@media screen and (min-width: 800px)": {
       flexDirection: "row",
+      alignItems: 'flex-start',
     },
   }),
   result: css({
