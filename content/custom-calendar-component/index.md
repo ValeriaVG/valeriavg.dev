@@ -4,13 +4,13 @@ date: 2024-10-20T15:58:56.330Z
 tags: [tutorial, beginners, react, preact, jsx]
 draft: false
 summary: |
-  HTML comes with a lot of ready to use and flexible elements, but date selector has a handful of limitations and the need to write your own calendar / date input emerges sooner rather than later. In this tutorial I'll walk you though implementing a calendar view and show how you can extend it functionality to fit your booking widget or dashboard filter
+  HTML comes with a lot of ready to use and flexible elements, but date selector has a handful of limitations and the need to write your own calendar / date input emerges sooner rather than later. In this tutorial I'll walk you though implementing a calendar view and show how you can extend its functionality to fit your booking widget or dashboard filter
 ---
 
 HTML comes with a lot of ready to use and flexible elements, but date selector
 has a handful of limitations and the need to write your own calendar / date
-input emerges sooner rather than later. In this tutorial I'll walk you though
-implementing a calendar view and show how you can extend it functionality to fit
+input emerges sooner rather than later. In this tutorial I'll walk you through
+implementing a calendar view and show how you can extend its functionality to fit
 your booking widget or dashboard filter.
 
 Here's how the final result might look like:
@@ -40,16 +40,16 @@ at reading standard html and browsers already have all required keyboard
 navigation handlers assigned.
 
 If you're, like me, residing in a country that counts weekdays from Monday, I
-still suggest start with Sunday and change the order later on to match how
+still suggest starting with a Sunday-first calendar and change the order later on to match how
 JavaScript `Date` does that.
 
-I encourage you to spend some time styling it till it matches your vision before
-we move on to implementing a function that would be able to create such view for
+I encourage you to spend some time styling the calendar till it matches your vision before
+we move on to implement a function that would be able to create such view for
 any month of your choice.
 
 ### Generating calendar matrix
 
-If we are to strip the calendar markup from above to the bare bones we would end
+If we are to strip the markup from above to the bare bones we would end
 up with the following data structure:
 
 ```json
@@ -685,3 +685,5 @@ same approach we used with `selectedDays` and I'll leave it to you to figure
 out, but if you are interested in the exact code that fuels
 [example](#calendar), feel free to check it on
 [GitHub](https://github.com/ValeriaVG/valeriavg.dev/tree/main/content/custom-calendar-component).
+
+> Challenge: Remember how I said you could come back and implement a calendar that starts from Monday later on? Now is the time to try and tackle this challenge! Good luck!
