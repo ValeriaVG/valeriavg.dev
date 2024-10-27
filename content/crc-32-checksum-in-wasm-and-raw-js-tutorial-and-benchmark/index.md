@@ -5,6 +5,7 @@ tags: [webassembly, webdev, performance, tutorial]
 draft: false
 summary: |
   In this tutorial we'll build a cyclic redundancy check (CRC) hashing function. More specifically, its 32 bit variant called "CRC-32". I bumped into it in the PNG specification, but it's also used in Gzip and bunch of other formats and protocols. In short, it makes a tiny (4 bytes) hash out of whatever binary data you feed to it and changes significantly if data changes even slightly. Of course, such a tiny function is not even close to be crypto secure, therefore it's only used to check if data was transferred correctly.
+id: "1ea70870-9437-11ef-af43-558f8bb50797"
 ---
 
 In this tutorial we'll build a [cyclic redundancy check (CRC)](https://en.wikipedia.org/wiki/Cyclic_redundancy_check) hashing function. More specifically, its 32 bit variant called "CRC-32". I bumped into it in the PNG specification, but it's also used in Gzip and bunch of other formats and protocols. In short, it makes a tiny (4 bytes) hash out of whatever binary data you feed to it and changes significantly if data changes even slightly. Of course, such a tiny function is not even close to be crypto secure, therefore it's only used to check if data was transferred correctly.

@@ -6,6 +6,7 @@ draft: false
 dev_to: "https://dev.to/valeriavg/5-ways-to-use-redis-in-your-next-project-1j2o"
 summary: |
   If the best code is no code at all, then the next best thing is code, that you can explain in one simple sentence. For example, like this: Redis holds a variety of structures in memory and lets you manage them through a text based command protocol. Despite, or maybe, because of its simplicity, Redis has plenty of utility in modern web architecture.
+id: "1ea61e10-9437-11ef-af43-558f8bb50797"
 ---
 
 If the best code is no code at all, then the next best thing is code, that you can explain in one simple sentence.

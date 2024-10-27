@@ -5,6 +5,7 @@ tags: [javascript, node, webdev, tutorial]
 draft: false
 summary: |
   There are quite a few cases where you can benefit from importing an arbitrary file directly: in universal apps, tests, or simply to avoid boilerplate. Good news: you don't need Babel, Webpack, or anything else for it.
+id: "1ea47060-9437-11ef-af43-558f8bb50797"
 ---
 
 There are quite a few cases where you can benefit from importing an arbitrary file directly: in universal apps, tests, or simply to avoid boilerplate. Good news: you don't need Babel, Webpack, or anything else for it.

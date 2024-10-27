@@ -7,6 +7,7 @@ twitter: "1673699596218793986"
 dev_to: https://dev.to/valeriavg/plug-play-modular-architecture-for-scalable-and-maintainable-apps-2je9
 summary: |
   A new project is always a joy: the code hasn't yet been bloated with deprecated features, rushed decisions and questionable dependencies. When my projects get to this state I become increasingly less productive and the urge to refactor grows exponentially, which, as you would imagine, halts any progress entirely.
+id: "1ea64520-9437-11ef-af43-558f8bb50797"
 ---
 
 A new project is always a joy: the code hasn't yet been bloated with deprecated features, rushed decisions and questionable dependencies. When my projects get to this state I become increasingly less productive and the urge to refactor grows exponentially, which, as you would imagine, halts any progress entirely.

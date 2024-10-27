@@ -6,6 +6,7 @@ draft: false
 dev_to: "https://dev.to/valeriavg/five-pro-tips-to-master-promises-in-js-c2h"
 summary: |
   Events handling and promises in particular are hands down the best JavaScript feature. You're probably familiar with the concept itself, but in short, a Promise in JavaScript is a promise to call back with the result.
+id: "1eac86b0-9437-11ef-af43-558f8bb50797"
 ---
 
 Events handling and promises in particular are hands down the best JavaScript feature. You're probably familiar with the concept itself, but in short, a `Promise` in JavaScript is _a promise to call back with the result_.

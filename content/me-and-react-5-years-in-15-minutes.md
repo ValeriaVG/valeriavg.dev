@@ -7,6 +7,7 @@ twitter: "1567745886800732160"
 dev_to: https://dev.to/valeriavg/me-react-5-years-in-15-minutes-58od
 summary: |
   I first heard of React when a friend showed me a project he had written. It was some sort of content management system: it had tables, forms, visual editors and stuff like this. I don't remember much, except that code was really really confusing
+id: "1ea88f10-9437-11ef-af43-558f8bb50797"
 ---
 
 I first heard of React when a friend showed me a project he had written. It was some sort of content management system: it had tables, forms, visual editors and stuff like this. I don't remember much, except that code was really really confusing, it looked like this:

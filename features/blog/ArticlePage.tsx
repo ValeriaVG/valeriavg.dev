@@ -17,6 +17,7 @@ export default function ArticlePage({
     "@type": "BlogPosting",
     headline: article.title,
     datePublished: new Date(article.date).toISOString(),
+    dateModified: new Date(article.updatedAt || article.date).toISOString(),
     author: [
       {
         "@type": "Person",

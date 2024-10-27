@@ -6,6 +6,7 @@ draft: false
 dev_to: "https://dev.to/valeriavg/master-binary-in-five-minutes-2lj5"
 summary: |
   Binary is the very core of everything digital, not only in web development, but literally everything: from variables and file data to transport protocols and executables themselves.
+id: "1ea6e160-9437-11ef-af43-558f8bb50797"
 ---
 
 Binary is the very core of everything digital, not only in web development, but literally everything: from variables and file data to transport protocols and executables themselves.

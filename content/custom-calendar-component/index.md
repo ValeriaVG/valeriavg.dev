@@ -5,6 +5,7 @@ tags: [tutorial, beginners, react, preact, jsx]
 draft: false
 summary: |
   HTML comes with a lot of ready to use and flexible elements, but date selector has a handful of limitations and the need to write your own calendar / date input emerges sooner rather than later. In this tutorial I'll walk you though implementing a calendar view and show how you can extend its functionality to fit your booking widget or dashboard filter
+id: "1ea95260-9437-11ef-af43-558f8bb50797"
 ---
 
 HTML comes with a lot of ready to use and flexible elements, but date selector

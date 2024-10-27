@@ -1,4 +1,4 @@
-import { Meta } from "#core/Head.tsx";
+import Head, { Meta } from "#core/Head.tsx";
 import type { Article } from "#types";
 import { List } from "./List.tsx";
 import Pagination from "./Pagination.tsx";
@@ -22,6 +22,14 @@ export default function HomePage({
             : undefined
         }
       />
+      <Head>
+        <link
+          href="/feed"
+          type="application/atom+xml"
+          rel="alternate"
+          title="ValeriaVG Blog feed"
+        />
+      </Head>
       <List articles={articles} />
       <Pagination current={page} total={totalPages} baseUrl="" />
     </main>

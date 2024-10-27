@@ -6,6 +6,7 @@ draft: false
 dev_to: "https://dev.to/valeriavg/how-to-do-magic-with-numbers-p6d"
 summary: |
   JavaScript Number type would have been called double or float64 in a compiled language. Therefore, numbers have some limits
+id: "1ea5a8e0-9437-11ef-af43-558f8bb50797"
 ---
 
 JavaScript `Number` type would have been called `double` or `float64` in a compiled language. Therefore, numbers have some limits:

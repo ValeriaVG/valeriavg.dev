@@ -6,6 +6,7 @@ draft: false
 dev_to: "https://dev.to/valeriavg/master-git-in-7-minutes-gai"
 summary: |
   Essentially, Git keeps tabs on text changes, but the definition is a version control system. Chances are you've already used git one way or another: it is a de-facto standard for code versioning due to it's distributed nature, as opposed to centralised Apache Subversion (SVN).
+id: "1ea29ba0-9437-11ef-af43-558f8bb50797"
 ---
 
 Essentially, Git keeps tabs on text changes, but the definition is a version control system. Chances are you've already used git one way or another: it is a de-facto standard for code versioning due to it's distributed nature, as opposed to centralised Apache Subversion (SVN).

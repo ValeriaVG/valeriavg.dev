@@ -69,7 +69,6 @@ const calendarReducer = (
     };
   }
   if (action.type === "hover_day" && prevState.selectedDays?.length === 1) {
-    console.log(action);
     return { ...prevState, hoverDay: action.day };
   }
   return prevState;

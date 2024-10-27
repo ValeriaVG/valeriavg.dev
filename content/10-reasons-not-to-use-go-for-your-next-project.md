@@ -6,6 +6,7 @@ draft: false
 dev_to: "https://dev.to/valeriavg/10-reasons-not-to-use-go-for-your-next-project-313i"
 summary: |
   They say Go is the language of the web. Of course, with Google backing it up it sounds very objective! But is it as good as they say? I can  think of cases where it wouldn't be a good fit
+id: "1eac5fa0-9437-11ef-af43-558f8bb50797"
 ---
 
 They say Go is the language of the web. Of course, with Google backing it up it sounds very objective! But is it as good as they say? I can think of cases where it wouldn't be a good fit

@@ -1,9 +1,11 @@
 import { Article } from "#types";
 import { extract } from "https://deno.land/std@0.145.0/encoding/front_matter.ts";
 import * as Marked from "https://esm.sh/marked@4.0.12";
+import * as uuid from "jsr:@std/uuid";
 
 import readDir from "#lib/readDir.ts";
 import compileSSI from "#lib/ssi/compile.ts";
+import { generateFeed } from "../features/feed/atom.ts";
 
 const rawContent = await readDir("./content");
 const content: Record<string, Article> = {};
@@ -16,7 +18,7 @@ for (const pathname in rawContent) {
   }
 }
 
-const scripts = await compileSSI(ssi.map(name=>`./content/${name}`));
+const scripts = await compileSSI(ssi.map((name) => `./content/${name}`));
 
 const ssiContents = `
 import type { FC } from 'hono/jsx';
@@ -42,9 +44,23 @@ for (const pathname in rawContent) {
     continue;
   }
   try {
+    const fileInfo = await Deno.stat(rawContent[pathname]);
     const contents = await Deno.readFile(rawContent[pathname]);
     const text = new TextDecoder().decode(contents);
     const data = extract<Omit<Article, "url" | "content">>(text);
+    if (!data.attrs["id"]) {
+      data.attrs.id = uuid.v1.generate();
+      // Write back to file
+      await Deno.writeFile(
+        rawContent[pathname],
+        new TextEncoder().encode(
+          text.replaceAll(`\n---\n`, `\nid: "${data.attrs.id}"\n---\n`)
+        )
+      );
+    }
+    data.attrs.updatedAt = new Date(
+      fileInfo.mtime || data.attrs.date
+    ).toISOString();
     const article = { ...data.attrs } as Article;
     article.url = pathname.replace(/(\/index|)\.md$/, "");
     const renderer = new Renderer(article.url);
@@ -82,4 +98,11 @@ export const articlesByTag = Object.values(content).reduce((a, c) => {
 await Deno.writeFile(
   "./content/mod.ts",
   new TextEncoder().encode(moduleContents)
+);
+
+const feed = generateFeed();
+
+await Deno.writeFile(
+  "./features/feed/feed.xml",
+  new TextEncoder().encode(feed)
 );

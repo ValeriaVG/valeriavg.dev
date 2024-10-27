@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<title>ValeriaVG Blog</title>
+	<subtitle>Blog about frontend, backend and everything in between.</subtitle>
+	<link href="https://valeriavg.dev/feed" rel="self" />
+	<link href="https://valeriavg.dev/" />
+	<id>urn:uuid:0623df77-4f14-442d-a72b-e7fd2f4ac96a</id>
+	<updated>2024-10-27T08:11:45.453Z</updated>
+	<entry>
+		<title>Implementing custom Calendar component</title>
+		<link href="https://valeriavg.dev/custom-calendar-component" />
+		<id>urn:uuid:1ea95260-9437-11ef-af43-558f8bb50797</id>
+        <published>2024-10-20T15:58:56.330Z</published>
+		<updated>2024-10-27T07:43:13.030Z</updated>
+		<summary>HTML comes with a lot of ready to use and flexible elements, but date selector has a handful of limitations and the need to write your own calendar / date input emerges sooner rather than later. In this tutorial I&#39;ll walk you though implementing a calendar view and show how you can extend its functionality to fit your booking widget or dashboard filter
+</summary>
+		<author>
+			<name>Valeria Viana Gusmao</name>
+			<email>mail@valeriavg.dev</email>
+		</author>
+	</entry>
+<entry>
+		<title>Plug &amp; Play Modular Architecture for Scalable and Maintainable Apps</title>
+		<link href="https://valeriavg.dev/modular-architecture-plug-n-play" />
+		<id>urn:uuid:1ea64520-9437-11ef-af43-558f8bb50797</id>
+        <published>2023-06-27T16:24:13.000Z</published>
+		<updated>2024-10-27T07:43:13.010Z</updated>
+		<summary>A new project is always a joy: the code hasn&#39;t yet been bloated with deprecated features, rushed decisions and questionable dependencies. When my projects get to this state I become increasingly less productive and the urge to refactor grows exponentially, which, as you would imagine, halts any progress entirely.
+</summary>
+		<author>
+			<name>Valeria Viana Gusmao</name>
+			<email>mail@valeriavg.dev</email>
+		</author>
+	</entry>
+<entry>
+		<title>ES Modules &amp; Import Maps: Back to the Future</title>
+		<link href="https://valeriavg.dev/es-modules-import-maps-back-to-the-future" />
+		<id>urn:uuid:1eac1180-9437-11ef-af43-558f8bb50797</id>
+        <published>2022-09-24T09:13:15.000Z</published>
+		<updated>2024-10-27T07:43:13.049Z</updated>
+		<summary>There was a time when creating a web page meant creating an html file, yet nowadays it seems impossible to build any frontend without the bottomless pit of node_modules, yielding a finely chewed yet hefty bundle.xyz.js. Well, I got to learn that it might not be the case soon and, naturally, I feel the urge to share it with the rest of you.
+</summary>
+		<author>
+			<name>Valeria Viana Gusmao</name>
+			<email>mail@valeriavg.dev</email>
+		</author>
+	</entry>
+<entry>
+		<title>Me &amp; React: 5 Years in 15 Minutes</title>
+		<link href="https://valeriavg.dev/me-and-react-5-years-in-15-minutes" />
+		<id>urn:uuid:1ea88f10-9437-11ef-af43-558f8bb50797</id>
+        <published>2022-09-08T04:56:49.000Z</published>
+		<updated>2024-10-27T07:43:13.025Z</updated>
+		<summary>I first heard of React when a friend showed me a project he had written. It was some sort of content management system: it had tables, forms, visual editors and stuff like this. I don&#39;t remember much, except that code was really really confusing
+</summary>
+		<author>
+			<name>Valeria Viana Gusmao</name>
+			<email>mail@valeriavg.dev</email>
+		</author>
+	</entry>
+<entry>
+		<title>10 Reasons NOT to Use Go for Your Next Project</title>
+		<link href="https://valeriavg.dev/10-reasons-not-to-use-go-for-your-next-project" />
+		<id>urn:uuid:1eac5fa0-9437-11ef-af43-558f8bb50797</id>
+        <published>2021-12-06T15:58:52.000Z</published>
+		<updated>2024-10-27T07:43:13.050Z</updated>
+		<summary>They say Go is the language of the web. Of course, with Google backing it up it sounds very objective! But is it as good as they say? I can  think of cases where it wouldn&#39;t be a good fit
+</summary>
+		<author>
+			<name>Valeria Viana Gusmao</name>
+			<email>mail@valeriavg.dev</email>
+		</author>
+	</entry>
+<entry>
+		<title>How Build a Web App in 11 Minutes and Fall in Love With Sveltekit</title>
+		<link href="https://valeriavg.dev/how-build-a-web-app-in-11-minutes-and-fall-in-love-with-sveltekit" />
+		<id>urn:uuid:1e9ca830-9437-11ef-af43-558f8bb50797</id>
+        <published>2021-09-18T13:21:35.000Z</published>
+		<updated>2024-10-27T07:43:12.947Z</updated>
+		<summary>It&#39;s been a long time since I got excited about a framework. I often advocate for reinventing the wheel, how come I&#39;m writing an ode to a framework? Short answer because SvelteKit is very good, even though it&#39;s still in beta. The long answer is ahead.</summary>
+		<author>
+			<name>Valeria Viana Gusmao</name>
+			<email>mail@valeriavg.dev</email>
+		</author>
+	</entry>
+<entry>
+		<title>Master Git in 7 Minutes</title>
+		<link href="https://valeriavg.dev/master-git-in-7-minutes" />
+		<id>urn:uuid:1ea29ba0-9437-11ef-af43-558f8bb50797</id>
+        <published>2021-07-11T12:27:30.000Z</published>
+		<updated>2024-10-27T07:43:12.986Z</updated>
+		<summary>Essentially, Git keeps tabs on text changes, but the definition is a version control system. Chances are you&#39;ve already used git one way or another: it is a de-facto standard for code versioning due to it&#39;s distributed nature, as opposed to centralised Apache Subversion (SVN).
+</summary>
+		<author>
+			<name>Valeria Viana Gusmao</name>
+			<email>mail@valeriavg.dev</email>
+		</author>
+	</entry>
+<entry>
+		<title>Crc 32 Checksum in Wasm and Raw Js Tutorial and Benchmark</title>
+		<link href="https://valeriavg.dev/crc-32-checksum-in-wasm-and-raw-js-tutorial-and-benchmark" />
+		<id>urn:uuid:1ea70870-9437-11ef-af43-558f8bb50797</id>
+        <published>2021-07-07T20:49:55.000Z</published>
+		<updated>2024-10-27T07:43:13.016Z</updated>
+		<summary>In this tutorial we&#39;ll build a cyclic redundancy check (CRC) hashing function. More specifically, its 32 bit variant called &quot;CRC-32&quot;. I bumped into it in the PNG specification, but it&#39;s also used in Gzip and bunch of other formats and protocols. In short, it makes a tiny (4 bytes) hash out of whatever binary data you feed to it and changes significantly if data changes even slightly. Of course, such a tiny function is not even close to be crypto secure, therefore it&#39;s only used to check if data was transferred correctly.
+</summary>
+		<author>
+			<name>Valeria Viana Gusmao</name>
+			<email>mail@valeriavg.dev</email>
+		</author>
+	</entry>
+<entry>
+		<title>Master Binary in Five Minutes</title>
+		<link href="https://valeriavg.dev/master-binary-in-five-minutes" />
+		<id>urn:uuid:1ea6e160-9437-11ef-af43-558f8bb50797</id>
+        <published>2021-06-13T08:37:41.000Z</published>
+		<updated>2024-10-27T07:43:13.014Z</updated>
+		<summary>Binary is the very core of everything digital, not only in web development, but literally everything: from variables and file data to transport protocols and executables themselves.
+</summary>
+		<author>
+			<name>Valeria Viana Gusmao</name>
+			<email>mail@valeriavg.dev</email>
+		</author>
+	</entry>
+<entry>
+		<title>Five Pro Tips to Master Promises in Js</title>
+		<link href="https://valeriavg.dev/five-pro-tips-to-master-promises-in-js" />
+		<id>urn:uuid:1eac86b0-9437-11ef-af43-558f8bb50797</id>
+        <published>2021-06-05T09:25:36.000Z</published>
+		<updated>2024-10-27T07:43:13.051Z</updated>
+		<summary>Events handling and promises in particular are hands down the best JavaScript feature. You&#39;re probably familiar with the concept itself, but in short, a Promise in JavaScript is a promise to call back with the result.
+</summary>
+		<author>
+			<name>Valeria Viana Gusmao</name>
+			<email>mail@valeriavg.dev</email>
+		</author>
+	</entry>
+<entry>
+		<title>How to Use Custom Files as Modules in Nodejs</title>
+		<link href="https://valeriavg.dev/how-to-use-custom-files-as-modules-in-nodejs" />
+		<id>urn:uuid:1ea47060-9437-11ef-af43-558f8bb50797</id>
+        <published>2021-02-21T13:49:13.000Z</published>
+		<updated>2024-10-27T07:43:12.998Z</updated>
+		<summary>There are quite a few cases where you can benefit from importing an arbitrary file directly: in universal apps, tests, or simply to avoid boilerplate. Good news: you don&#39;t need Babel, Webpack, or anything else for it.
+</summary>
+		<author>
+			<name>Valeria Viana Gusmao</name>
+			<email>mail@valeriavg.dev</email>
+		</author>
+	</entry>
+<entry>
+		<title>How to Do Magic With Numbers</title>
+		<link href="https://valeriavg.dev/how-to-do-magic-with-numbers" />
+		<id>urn:uuid:1ea5a8e0-9437-11ef-af43-558f8bb50797</id>
+        <published>2021-01-24T11:05:13.000Z</published>
+		<updated>2024-10-27T07:43:13.006Z</updated>
+		<summary>JavaScript Number type would have been called double or float64 in a compiled language. Therefore, numbers have some limits
+</summary>
+		<author>
+			<name>Valeria Viana Gusmao</name>
+			<email>mail@valeriavg.dev</email>
+		</author>
+	</entry>
+<entry>
+		<title>5 Ways to Use Redis in Your Next Project</title>
+		<link href="https://valeriavg.dev/5-ways-to-use-redis-in-your-next-project" />
+		<id>urn:uuid:1ea61e10-9437-11ef-af43-558f8bb50797</id>
+        <published>2020-11-17T10:43:15.000Z</published>
+		<updated>2024-10-27T07:43:13.009Z</updated>
+		<summary>If the best code is no code at all, then the next best thing is code, that you can explain in one simple sentence. For example, like this: Redis holds a variety of structures in memory and lets you manage them through a text based command protocol. Despite, or maybe, because of its simplicity, Redis has plenty of utility in modern web architecture.
+</summary>
+		<author>
+			<name>Valeria Viana Gusmao</name>
+			<email>mail@valeriavg.dev</email>
+		</author>
+	</entry>
+</feed>
