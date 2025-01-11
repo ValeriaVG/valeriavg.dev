@@ -5,13 +5,13 @@
 	<link href="https://valeriavg.dev/feed" rel="self" />
 	<link href="https://valeriavg.dev/" />
 	<id>urn:uuid:0623df77-4f14-442d-a72b-e7fd2f4ac96a</id>
-	<updated>2024-10-27T08:11:45.453Z</updated>
+	<updated>2025-01-11T17:28:38.170Z</updated>
 	<entry>
 		<title>Implementing custom Calendar component</title>
 		<link href="https://valeriavg.dev/custom-calendar-component" />
 		<id>urn:uuid:1ea95260-9437-11ef-af43-558f8bb50797</id>
         <published>2024-10-20T15:58:56.330Z</published>
-		<updated>2024-10-27T07:43:13.030Z</updated>
+		<updated>2024-11-01T17:59:45.890Z</updated>
 		<summary>HTML comes with a lot of ready to use and flexible elements, but date selector has a handful of limitations and the need to write your own calendar / date input emerges sooner rather than later. In this tutorial I&#39;ll walk you though implementing a calendar view and show how you can extend its functionality to fit your booking widget or dashboard filter
 </summary>
 		<author>

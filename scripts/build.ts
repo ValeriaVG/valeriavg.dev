@@ -47,7 +47,10 @@ for (const pathname in rawContent) {
     const fileInfo = await Deno.stat(rawContent[pathname]);
     const contents = await Deno.readFile(rawContent[pathname]);
     const text = new TextDecoder().decode(contents);
-    const data = extract<Omit<Article, "url" | "content">>(text);
+    const data = extract<Omit<Article, "url" | "content"> & { draft: boolean }>(
+      text
+    );
+    if (data.attrs.draft) continue;
     if (!data.attrs["id"]) {
       data.attrs.id = uuid.v1.generate();
       // Write back to file

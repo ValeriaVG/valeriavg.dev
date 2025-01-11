@@ -3,7 +3,8 @@
     "start": "deno run -A main.ts",
     "build": "deno run -A scripts/build.ts",
     "dev": "deno task build && deno run -A --watch main.ts",
-    "test": "BASE_URL= deno test -A"
+    "test": "BASE_URL= deno test -A",
+    "new":"deno run -A scripts/create.ts"
   },
   "imports": {
     "#content": "./content/mod.ts",
